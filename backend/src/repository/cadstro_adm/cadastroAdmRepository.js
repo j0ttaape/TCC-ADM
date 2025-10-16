@@ -11,3 +11,14 @@ const [info] = await connection.query(comando,[informacoes.nome,informacoes.emai
 return info.insertId
 
 }
+
+export async function permissoesAdm(informacoes){
+    const comando = `
+    select id_adm from cadastro_adm
+    where email = ? 
+    and nome = ?   
+    `
+
+    const [registros] = await connection.query(comando,[informacoes.email,informacoes.nome]);
+    return registros;
+}
