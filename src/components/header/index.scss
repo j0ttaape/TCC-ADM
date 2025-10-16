@@ -1,0 +1,35 @@
+.header-container {
+    width: 17rem;
+    background-color: #a2b8ce;
+    position: fixed;
+
+    .container-sessoes {
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        gap: 1.5rem;
+        
+
+        .botoes {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding-top: 6px;
+            margin-top:1rem ;
+            height: 2.5rem;
+            width: 16rem;
+
+            background-color: aqua;
+            font-size: 23px;
+            border-radius: 10px;
+            
+
+            a {
+                text-decoration: none;
+            }
+        }
+    }
+}

@@ -10,9 +10,8 @@ export default function Inicio() {
 
             <section className='container-main'>
 
-                <h2>Bem-vindo ao HemoControl</h2>
+                <h2>esse é o inicio</h2>
 
-                <p>Sistema de controle de hemodiálise.</p>
 
             </section>
             

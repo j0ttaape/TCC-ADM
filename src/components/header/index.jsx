@@ -1,48 +1,58 @@
 import { Link } from 'react-router-dom';
 import './index.scss'
+import "/src/index.scss"
 import { FaHome, FaPlusCircle, FaSearch, FaUsers, FaCalendarCheck, FaChartLine, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 export default function Header() {
 
   return (
-    <div className="headre-container">
+    <div className="header-container">
 
-      <div className="container-botoes">
+        <section className='container-sessoes'>
 
-        <Link to={'/'}><FaHome className="icon" />  Inicio</Link>
+            <div className="botoes">  
 
-      </div>
+            <Link to={'/'}><FaHome className="icon" />  Inicio</Link>
 
-      <div className="container-botoes">
-        <Link to={'/CadastrarHemo'}><FaPlusCircle className="icon" /> Cadastrar Hemocentro</Link>
+            </div>
 
-      </div>
+            <div className="botoes">
 
-      <div className="container-botoes">
-        <Link to={'/Buscarhemo'}><FaSearch className="icon" /> Buscar Hemocentro</Link>
+            <Link to={'/CadastrarHemo'}><FaPlusCircle className="icon" /> Cadastrar Hemocentro</Link>
 
-      </div>
+            </div>
 
-      <div className="container-botoes">
-        <Link to={'/GerenciarDoadores'}><FaUsers className="icon" /> Gerenciar Doadores</Link>
+            <div className="botoes">
 
-      </div>
+            <Link to={'/Buscarhemo'}><FaSearch className="icon" /> Buscar Hemocentro</Link>
 
-      <div className="container-botoes">
-        <Link to={'/Agendamentos'}><FaCalendarCheck className="icon" /> Agendamentos</Link>
+            </div>
 
-      </div>
+            <div className="botoes">
 
-      <div className="container-botoes">
-        <Link to={'/RelatorioGeral'}><FaChartLine className="icon" /> Relatórios Geral</Link>
+            <Link to={'/GerenciarDoadores'}><FaUsers className="icon" /> Gerenciar Doadores</Link>
 
-      </div>
+            </div>
 
-      <div className="container-botoes">
-        <Link to={'/Configuracao'}><FaCog className="icon" /> Configurações</Link>
+            <div className="botoes">
 
-      </div>
+            <Link to={'/Agendamentos'}><FaCalendarCheck className="icon" /> Agendamentos</Link>
 
+            </div>
+
+            <div className="botoes">
+
+            <Link to={'/RelatorioGeral'}><FaChartLine className="icon" /> Relatórios Geral</Link>
+
+            </div>
+
+            <div className="botoes">
+
+            <Link to={'/Configuracao'}><FaCog className="icon" /> Configurações</Link>
+
+            </div>
+
+         </section>
     </div>
 
 
