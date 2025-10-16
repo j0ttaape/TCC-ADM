@@ -1,12 +1,12 @@
 import Header from '../../components/header/index.jsx';
 
-export default function Doadores(){
+export default function Agendamentos(){
     return(
         <div>
             <Header />
             <section>
-                <h2>Doadores</h2>
-                <p>Gerencie os doadores aqui.</p>
+      
+                <p>parte de cadastrar user</p>
             </section>
         </div>
     )
