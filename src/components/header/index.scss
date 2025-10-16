@@ -1,6 +1,6 @@
 .header-container {
-    width: 17rem;
-    background-color: #a2b8ce;
+    width: 19rem;
+    background-color: #183758;
     position: fixed;
 
     .container-sessoes {
@@ -20,11 +20,16 @@
             padding-top: 6px;
             margin-top:1rem ;
             height: 2.5rem;
-            width: 16rem;
+            width: 17rem;
 
-            background-color: aqua;
-            font-size: 23px;
+            background-color: #ed1818;
+            font-size: 21px;
             border-radius: 10px;
+
+            &:hover {
+                background-color: #ed1818;
+                color: #c3adb0;
+            }
             
 
             a {

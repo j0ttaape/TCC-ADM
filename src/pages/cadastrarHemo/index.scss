@@ -1,0 +1,93 @@
+
+.container-cadastrar-hemo {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+
+    .container-hemos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-left: 20rem;
+        padding: 2rem;
+        flex: 1;
+
+        h2 {
+            font-size: 2.5rem;
+            color: #183758;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .grupos {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 500px;
+
+            .grupo {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                label {
+                    font-size: 1.2rem;
+                    color: #183758;
+                    font-weight: 600;
+                }
+
+                .input {
+                    height: 3rem;
+                    border-radius: 8px;
+                    border: 2px solid #ddd;
+                    font-size: 1rem;
+                    padding: 0 1rem;
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+                    &:focus {
+                        border-color: #ed1818;
+                        box-shadow: 0 0 5px rgba(237, 24, 24, 0.5);
+                        outline: none;
+                    }
+
+                    &::placeholder {
+                        color: #aaa;
+                    }
+                }
+            }
+        }
+
+        button {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background-color: #ed1818;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+
+            &:hover {
+                background-color: #c91414;
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container-cadastrar-hemo .container-hemos {
+        margin-left: 0;
+        padding: 1rem;
+    }
+}
