@@ -8,3 +8,8 @@ throw new Error('Hemocentro inexistente');
 
 
 }
+
+export  function validarListarHemocentros(registros){
+    if(!registros)
+        throw new Error('Ainda não temos nenhum hemocentro cadastrado'); 
+}
