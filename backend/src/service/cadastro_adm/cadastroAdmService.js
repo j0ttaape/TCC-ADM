@@ -1,4 +1,4 @@
-import { permissaoAdm, permissoesAdm } from "../../repository/cadstro_adm/cadastroAdmRepository.js"
+import { listarPedidos, permissaoAdm, permissoesAdm } from "../../repository/cadastro_adm/cadastroAdmRepository.js"
 import validarCadastroAdm, { validarPermissoesAdm } from "../../validation/cadastro_adm/cadastroAdmValidation.js";
 
 export async function permissaoAdmService(informacoes){
@@ -13,6 +13,19 @@ try {
 } 
 catch (error) {
 throw error    
+}
+
+}
+
+export async function listarPedidosService(){
+try {
+const registros = await listarPedidos();
+
+return registros;
+    
+} 
+catch (error) {
+    throw error;
 }
 
 }

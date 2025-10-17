@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { generateToken } from "../../utils/jwt.js";
-import { permissaoAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
+import { listarPedidosService, permissaoAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
 
 const cad = Router();
 
@@ -24,6 +24,23 @@ cad.post('/pedirPermissao', async(req,resp) => {
     }
 
 
-} )
+} );
+
+cad.get('/listarPedidos', async (req,resp) => {
+
+    try {
+        const registros = await listarPedidosService();
+        
+        resp.status(201).send({
+            registros
+        });
+    } 
+    catch (error) {
+        global.logErro(error);
+        resp.status(401).send(global.criarErro(error));
+            
+    }
+
+})
 
 export default cad;

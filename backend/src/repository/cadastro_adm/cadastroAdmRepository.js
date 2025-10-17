@@ -22,3 +22,14 @@ export async function permissoesAdm(informacoes){
     const [registros] = await connection.query(comando,[informacoes.email,informacoes.nome]);
     return registros;
 }
+
+export async function listarPedidos(){
+    const comando = `
+    select * from cadastro_adm 
+    where permissao = false
+    ` 
+
+    const [registros] = await connection.query(comando);
+
+    return registros;
+}

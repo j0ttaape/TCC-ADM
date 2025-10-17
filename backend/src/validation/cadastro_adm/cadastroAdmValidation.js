@@ -16,6 +16,6 @@ export default function validarCadastroAdm(info){
 }
 
 export function validarPermissoesAdm(registros){
-    if(registros)
-        throw new Error('usuario já cadastrado, aguardando permissão');
+    if(registros.length > 0)
+        throw new Error('usuario já cadastrado, aguardando permissão...');
 }
