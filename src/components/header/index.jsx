@@ -10,6 +10,12 @@ export default function Header() {
 
         <section className='container-sessoes'>
 
+            <div className='logo'>
+
+            <img src="/assets/image/logoTcc.webp" alt="" height={'70px'} />
+            <p>Doe vida</p>
+            </div>
+
             <div className="botoes">  
 
             <Link to={'/'}><FaHome className="icon" />  Inicio</Link>

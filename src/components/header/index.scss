@@ -11,6 +11,22 @@
         height: 100vh;
         gap: 1.5rem;
         
+        .logo{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            gap: 1rem;
+
+            img{
+                border-radius: 10px;
+            }
+
+            p{
+                font-size: 1.5rem;
+                color: #fcfcfc;
+            }
+        }
 
         .botoes {
             display: flex;
