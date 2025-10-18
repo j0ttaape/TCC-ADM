@@ -15,4 +15,4 @@ Rotas(api);
 
 const PORTA = process.env.PORTA;
 
-api.listen(PORTA, () => console.log(`API subiu com sucesso na porta ${PORTA}`));
+api.listen(PORTA, () => console.log(`API do adm subiu com sucesso na porta ${PORTA}`));
