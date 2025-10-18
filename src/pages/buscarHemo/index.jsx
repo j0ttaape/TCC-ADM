@@ -4,7 +4,6 @@ import Header from '../../components/header/index.jsx';
 import './index.scss';
 
 export default function Buscarhemo(){
-    const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [resultados, setResultados] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -36,9 +35,6 @@ export default function Buscarhemo(){
         }
     };
 
-    const handleCadastrarClick = () => {
-        navigate('/CadastrarHemo');
-    };
 
     return(
         <div className='container-buscar-hemo'>

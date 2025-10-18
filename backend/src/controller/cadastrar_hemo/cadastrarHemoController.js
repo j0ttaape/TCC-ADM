@@ -1,12 +1,14 @@
 import { Router } from "express";
-import cadastrarHemocentro from "../../repository/cadastrar_hemo/cadastrarHemoRepository.js";
+import cadastrarHemocentroService from "../../service/cadastrarHemo/cadastrarHemoService.js";
 
-const cad = Router();
+const cadHemo= Router();
 
-cad.post('/cadastrarHemocentro', async (req,resp) => {
+
+
+cadHemo.post('/cadastrarHemocentro', async (req,resp) => {
     try {
         const informacoes = req.body;
-        const id = await cadastrarHemocentro(informacoes);
+        const id = await cadastrarHemocentroService(informacoes);
         resp.status(201).send({id});
     } 
     catch (error) {
@@ -15,4 +17,4 @@ cad.post('/cadastrarHemocentro', async (req,resp) => {
     }
 } );
 
-export default cad
+export default cadHemo;

@@ -12,10 +12,10 @@ export default function CadastrarHemo() {
         const formData = new FormData(e.target);
 
         const data = {
-            nome: formData.get('nome'),
-            cidade: formData.get('cidade'),
-            bairro: formData.get('bairro'),
-            rua: formData.get('rua')
+            nome_hemocentro: formData.get('nome'),
+            cidade_hemocentro: formData.get('cidade'),
+            bairro_hemocentro: formData.get('bairro'),
+            rua_hemocentro: formData.get('rua')
         };
 
         try {
