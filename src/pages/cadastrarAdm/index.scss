@@ -1,0 +1,73 @@
+.container-cadastrar-adm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+
+    .cadastrar-adm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            font-size: 2.5rem;
+            color: #183758;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 400px;
+
+            input {
+                width: 100%;
+                height: 3rem;
+                border-radius: 8px;
+                border: 2px solid #ddd;
+                font-size: 1rem;
+                padding: 0 1rem;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+                &:focus {
+                    border-color: #ed1818;
+                    box-shadow: 0 0 5px rgba(237, 24, 24, 0.5);
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: #aaa;
+                }
+            }
+
+            button {
+                padding: 0.75rem 1.5rem;
+                background-color: #183758;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                margin: 1rem;
+
+                &:hover {
+                    background-color: #0f2533;
+                }
+            }
+        }
+    }
+
+}
