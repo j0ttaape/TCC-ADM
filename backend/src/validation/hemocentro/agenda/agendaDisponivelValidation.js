@@ -23,3 +23,8 @@ if(!requisitos.dia)
     throw new Error('Informe a data do dia');
 
 }
+
+export function validarLista(nome){
+if(!nome)
+    throw new Error('Énecessário o nome do hemocentro');
+}

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { adicionarSemanaService, adicionarDiaService } from "../../../service/hemocentros/agenda/agendaDisponivelService.js";
+import { adicionarSemanaService, adicionarDiaService, listarAgendaService } from "../../../service/hemocentros/agenda/agendaDisponivelService.js";
 
 
 const age = Router();
@@ -33,6 +33,23 @@ try {
         rows
     });
 }
+catch (error) {
+    global.logErro(error);
+    resp.status(401).send(global.criarErro(error));
+}
+
+})
+
+age.get('/listarAgenda/:nomeHemo', async(req,resp) => {
+try {
+const nome = req.params.nomeHemo;
+
+const registros = await listarAgendaService(nome);
+    
+resp.status(201).send({
+    registros
+}) 
+} 
 catch (error) {
     global.logErro(error);
     resp.status(401).send(global.criarErro(error));
