@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { adicionarSemanaService, adicionarDiaService, listarAgendaService, listarMesesService, listarDatasPorMesService, listarHorariosPorDataService, deletarDiaAgendaService } from "../../../service/hemocentros/agenda/agendaDisponivelService.js";
+import { adicionarSemanaService, adicionarDiaService, listarAgendaService, listarMesesService, listarDatasPorMesService, listarHorariosPorDataService, deletarDiaAgendaService, deletarHorarioAgendaService } from "../../../service/hemocentros/agenda/agendaDisponivelService.js";
 
 
 const age = Router();
@@ -119,6 +119,26 @@ const affectedRows = await deletarDiaAgendaService(nome,data);
 
   resp.status(200).send({
     mensagem: "Dia removido da agenda com sucesso",
+    affectedRows
+  })
+}
+catch (error) {
+     global.logErro(error);
+    resp.status(400).send(global.criarErro(error));
+}
+
+})
+
+age.delete('/deletarHorarioAgenda/:nomeHemo', async (req,resp) => {
+try {
+  const nome = req.params.nomeHemo;
+  const data = req.body.data;
+  const horario = req.body.horario;
+
+const affectedRows = await deletarHorarioAgendaService(nome, data, horario);
+
+  resp.status(200).send({
+    mensagem: "Horário removido da agenda com sucesso",
     affectedRows
   })
 }

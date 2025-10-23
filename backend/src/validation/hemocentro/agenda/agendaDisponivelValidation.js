@@ -43,3 +43,10 @@ if(!/^\d{2}\/\d{2}\/\d{4}$/.test(data))
     throw new Error('Formato da data inválido. Use DD/MM/YYYY');
 }
 
+export function validarHorario(horario){
+if(!horario)
+    throw new Error('É necessário informar o horário');
+if(!/^\d{2}:\d{2}$/.test(horario))
+    throw new Error('Formato do horário inválido. Use HH:mm');
+}
+

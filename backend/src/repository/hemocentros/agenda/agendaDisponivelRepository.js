@@ -180,3 +180,36 @@ const [info] = await connection.query(comando,[diaISO,nome]);
 return info.affectedRows
 
 }
+
+export async function deletarHorarioAgenda(dia, horario, nome){
+
+    const diaISO = converterDataBrasileiraParaISO(dia);
+
+    // Verificar se o horário específico existe na agenda
+    const comandoVerificar = `
+SELECT COUNT(*) as count
+FROM agenda a
+INNER JOIN hemocentros h ON h.id_hemocentro = a.id_hemocentro
+WHERE a.data_disponivel = ?
+AND a.horario_disponivel = ?
+AND h.nome_hemocentro = ?
+`
+
+    const [verificar] = await connection.query(comandoVerificar, [diaISO, horario, nome]);
+    if (verificar[0].count === 0) {
+        throw new Error('Horário não encontrado na agenda');
+    }
+
+    const comando = `
+DELETE agenda FROM agenda
+INNER JOIN hemocentros h ON h.id_hemocentro = agenda.id_hemocentro
+WHERE data_disponivel = ?
+AND horario_disponivel = ?
+AND h.nome_hemocentro = ?
+`
+
+const [info] = await connection.query(comando,[diaISO, horario, nome]);
+
+return info.affectedRows
+
+}
