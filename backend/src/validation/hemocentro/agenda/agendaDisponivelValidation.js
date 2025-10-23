@@ -28,3 +28,17 @@ export function validarLista(nome){
 if(!nome)
     throw new Error('Énecessário o nome do hemocentro');
 }
+
+export function validarMes(mes){
+if(!mes)
+    throw new Error('É necessário informar o mês');
+if(!/^\d{2}\/\d{4}$/.test(mes))
+    throw new Error('Formato do mês inválido. Use MM/YYYY');
+}
+
+export function validarData(data){
+if(!data)
+    throw new Error('É necessário informar a data');
+if(!/^\d{2}\/\d{2}\/\d{4}$/.test(data))
+    throw new Error('Formato da data inválido. Use DD/MM/YYYY');
+}

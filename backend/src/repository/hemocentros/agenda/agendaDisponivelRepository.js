@@ -76,11 +76,67 @@ return rows.affectedRows;
 
 }
 
+export async function listarMeses(nome){
+const comando = `
+select distinct date_format(a.data_disponivel, '%m/%Y') as mes
+from agenda a
+inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
+where h.nome_hemocentro = ?
+order by a.data_disponivel desc;
+`
+
+const [registros] = await connection.query(comando,[nome] );
+
+return registros;
+
+}
+
+export async function listarDatasPorMes(nome, mes){
+const comando = `
+select distinct date_format(a.data_disponivel, '%d/%m/%Y') as data
+from agenda a
+inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
+where h.nome_hemocentro = ? and date_format(a.data_disponivel, '%m/%Y') = ?
+order by a.data_disponivel asc;
+`
+
+const [registros] = await connection.query(comando,[nome, mes] );
+
+return registros;
+
+}
+
+export async function listarHorariosPorData(nome, data){
+const comando = `
+select time_format(a.horario_disponivel, '%H:%i') as horario
+from agenda a
+inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
+where h.nome_hemocentro = ? and date_format(a.data_disponivel, '%d/%m/%Y') = ?
+order by a.horario_disponivel asc;
+`
+
+const [registros] = await connection.query(comando,[nome, data] );
+
+return registros;
+
+}
+
 export async function listarAgenda(nome){
 const comando = `
-select distinct a.data_disponivel, h.id_hemocentro from agenda a
-inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
-where h.nome_hemocentro = ? 
+select data_disponivel, mes, id_hemocentro
+from (
+    select
+        date_format(a.data_disponivel, '%d/%m/%Y') as data_disponivel,
+        date_format(a.data_disponivel, '%m/%Y') as mes,
+        a.data_disponivel as data_original,
+        h.id_hemocentro
+    from agenda a
+    inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
+    where h.nome_hemocentro = ?
+    group by a.data_disponivel, h.id_hemocentro
+) as sub
+order by sub.data_original desc;
+
 `
 
 const [registros] = await connection.query(comando,[nome] );

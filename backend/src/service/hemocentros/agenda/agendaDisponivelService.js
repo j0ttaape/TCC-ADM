@@ -1,5 +1,5 @@
-import { adicionarSemanaDisponivel, adicionarDiaDisponivel, listarAgenda } from "../../../repository/hemocentros/agenda/agendaDisponivelRepository.js";
-import validarAdicionarSemana, { validarAdicionarDia, validarLista } from "../../../validation/hemocentro/agenda/agendaDisponivelValidation.js";
+import { adicionarSemanaDisponivel, adicionarDiaDisponivel, listarAgenda, listarMeses, listarDatasPorMes, listarHorariosPorData } from "../../../repository/hemocentros/agenda/agendaDisponivelRepository.js";
+import validarAdicionarSemana, { validarAdicionarDia, validarLista, validarMes, validarData } from "../../../validation/hemocentro/agenda/agendaDisponivelValidation.js";
 
 export async function adicionarSemanaService(requisitos){
 try {
@@ -34,7 +34,51 @@ const registros = await listarAgenda(nome);
 
 return registros;
 
-} 
+}
+catch (error) {
+    throw error
+}
+
+}
+
+export async function listarMesesService(nome){
+try {
+validarLista(nome);
+const registros = await listarMeses(nome);
+
+return registros;
+
+}
+catch (error) {
+    throw error
+}
+
+}
+
+export async function listarDatasPorMesService(nome, mes){
+try {
+validarLista(nome);
+validarMes(mes);
+const registros = await listarDatasPorMes(nome, mes);
+
+return registros;
+
+}
+catch (error) {
+    throw error
+}
+
+}
+
+export async function listarHorariosPorDataService(nome, data){
+try {
+validarLista(nome);
+validarData(data);
+const registros = await listarHorariosPorData(nome, data);
+
+return registros;
+
+}
 catch (error) {
     throw error
 }

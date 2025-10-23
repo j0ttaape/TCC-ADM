@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { adicionarSemanaService, adicionarDiaService, listarAgendaService } from "../../../service/hemocentros/agenda/agendaDisponivelService.js";
+import { adicionarSemanaService, adicionarDiaService, listarAgendaService, listarMesesService, listarDatasPorMesService, listarHorariosPorDataService } from "../../../service/hemocentros/agenda/agendaDisponivelService.js";
 
 
 const age = Router();
@@ -45,14 +45,67 @@ try {
 const nome = req.params.nomeHemo;
 
 const registros = await listarAgendaService(nome);
-    
+
 resp.status(201).send({
     registros
-}) 
-} 
+})
+}
 catch (error) {
     global.logErro(error);
     resp.status(401).send(global.criarErro(error));
+}
+
+})
+
+age.get('/listarMeses/:nomeHemo', async(req,resp) => {
+try {
+const nome = req.params.nomeHemo;
+
+const registros = await listarMesesService(nome);
+
+resp.status(200).send({
+    registros
+})
+}
+catch (error) {
+    global.logErro(error);
+    resp.status(400).send(global.criarErro(error));
+}
+
+})
+
+age.get('/listarDatas/:nomeHemo/:mes', async(req,resp) => {
+try {
+const nome = req.params.nomeHemo;
+const mes = req.params.mes;
+
+const registros = await listarDatasPorMesService(nome, mes);
+
+resp.status(200).send({
+    registros
+})
+}
+catch (error) {
+    global.logErro(error);
+    resp.status(400).send(global.criarErro(error));
+}
+
+})
+
+age.post('/listarHorarios/:nomeHemo', async(req,resp) => {
+try {
+const nome = req.params.nomeHemo;
+const data = req.body.data
+
+const registros = await listarHorariosPorDataService(nome, data);
+
+resp.status(200).send({
+    registros
+})
+}
+catch (error) {
+    global.logErro(error);
+    resp.status(400).send(global.criarErro(error));
 }
 
 })
