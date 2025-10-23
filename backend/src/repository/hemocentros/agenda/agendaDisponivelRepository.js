@@ -78,7 +78,7 @@ return rows.affectedRows;
 
 export async function listarAgenda(nome){
 const comando = `
-select a.data_disponivel, a.horario_disponivel from agenda a
+select distinct a.data_disponivel, h.id_hemocentro from agenda a
 inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
 where h.nome_hemocentro = ? 
 `
