@@ -42,3 +42,4 @@ if(!data)
 if(!/^\d{2}\/\d{2}\/\d{4}$/.test(data))
     throw new Error('Formato da data inválido. Use DD/MM/YYYY');
 }
+
