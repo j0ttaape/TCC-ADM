@@ -15,7 +15,8 @@ export default function validarCadastroAdm(info){
         throw new Error('É necessário nos informar seu email');
 }
 
-export function validarPermissoesAdm(registros){
-    if(registros.length > 0)
-        throw new Error('usuario já cadastrado, aguardando permissão...');
+export function validarConcederPermissao(id_requerido){
+if(!id_requerido)
+throw new Error('É necessárioo informar o id de requerimento');
+
 }
