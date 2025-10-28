@@ -35,15 +35,15 @@ export async function adicionarNoEstoque(infos, id_adm){
                 }
             }
 
-        const comando3 = `
-        update estoque
-        set quantidade_bolsas = quantidade_bolsas + ?,
-        quantidade_maxima = quantidade_maxima + ?
-        where id_hemocentro = ?
-        and tipo_sanguineo = ?
-        `
-          await connection.query(comando3,[infos.quantidade,infos.quantidade_maxima,id[0].id_hemocentro,infos.tipo_sanguineo]);
-         return 'salvo no banco de dados'
+            const comando3 = `
+            update estoque
+            set quantidade_bolsas = quantidade_bolsas + ?,
+            quantidade_maxima = quantidade_maxima + ?
+            where id_hemocentro = ?
+            and tipo_sanguineo = ?
+            `
+            await connection.query(comando3,[infos.quantidade,infos.quantidade_maxima,id[0].id_hemocentro,infos.tipo_sanguineo]);
+            return 'salvo no banco de dados'
 
     }
 
@@ -96,15 +96,15 @@ export async function retirarDoEstoque(infos, id_adm){
                 return 'Estoque não encontrado para este tipo sanguíneo';
             }
 
-        const comando3 = `
-        update estoque
-        set quantidade_bolsas = quantidade_bolsas - ?,
-        quantidade_maxima = quantidade_maxima - ?
-        where id_hemocentro = ?
-        and tipo_sanguineo = ?
-        `
-          await connection.query(comando3,[infos.quantidade,infos.quantidade_maxima,id[0].id_hemocentro,infos.tipo_sanguineo]);
-         return 'retirado do banco de dados'
+            const comando3 = `
+            update estoque
+            set quantidade_bolsas = quantidade_bolsas - ?,
+            quantidade_maxima = quantidade_maxima - ?
+            where id_hemocentro = ?
+            and tipo_sanguineo = ?
+            `
+            await connection.query(comando3,[infos.quantidade,infos.quantidade_maxima,id[0].id_hemocentro,infos.tipo_sanguineo]);
+            return 'retirado do banco de dados'
 
     }
 
@@ -118,4 +118,26 @@ export async function retirarDoEstoque(infos, id_adm){
 
     }
 
+}
+
+export async function listarEstoqueHemocentro(nome_hemo){
+    const comando = `
+    select id_hemocentro from hemocentros
+    where nome_hemocentro = ?
+    `
+    const [id] = await connection.query(comando,[nome_hemo]);
+
+    if(id.length == 1){
+        const comando2 = `
+        select tipo_sanguineo, quantidade_bolsas, quantidade_maxima
+        from estoque
+        where id_hemocentro = ?
+        order by tipo_sanguineo
+        `
+        const [estoque] = await connection.query(comando2,[id[0].id_hemocentro]);
+        return estoque;
+    }
+    else{
+        return 'Hemocentro não encontrado'
+    }
 }

@@ -83,11 +83,12 @@ return rows.affectedRows;
 
 export async function listarMeses(nome){
 const comando = `
-select distinct date_format(a.data_disponivel, '%m/%Y') as mes
+select distinct date_format(a.data_disponivel, '%m/%Y') as mes, min(a.data_disponivel) as data_min
 from agenda a
 inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
 where h.nome_hemocentro = ?
-order by a.data_disponivel desc;
+group by date_format(a.data_disponivel, '%m/%Y')
+order by data_min desc;
 `
 
 const [registros] = await connection.query(comando,[nome] );
@@ -98,11 +99,12 @@ return registros;
 
 export async function listarDatasPorMes(nome, mes){
 const comando = `
-select distinct date_format(a.data_disponivel, '%d/%m/%Y') as data
+select distinct date_format(a.data_disponivel, '%d/%m/%Y') as data, min(a.data_disponivel) as data_min
 from agenda a
 inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
 where h.nome_hemocentro = ? and date_format(a.data_disponivel, '%m/%Y') = ?
-order by a.data_disponivel asc;
+group by date_format(a.data_disponivel, '%d/%m/%Y')
+order by data_min asc;
 `
 
 const [registros] = await connection.query(comando,[nome, mes] );

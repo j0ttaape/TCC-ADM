@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getAuthentication } from "../../utils/jwt.js";
-import { inserirEstoqueService, retirarEstoqueService } from "../../service/estoque/serviceEstoque.js";
+import { inserirEstoqueService, retirarEstoqueService, listarEstoqueService } from "../../service/estoque/serviceEstoque.js";
 
 const estoque = Router();
 const Autenticador = getAuthentication();
@@ -32,6 +32,23 @@ const mensagem = await retirarEstoqueService(infos,id_adm);
 
 resp.status(201).send({
     mensagem
+})
+}
+catch (error) {
+    global.logErro(error);
+    resp.status(400).send(global.criarErro(error));
+}
+
+})
+
+estoque.get('/listarEstoque/:nome_hemo', async(req,resp) => {
+try {
+const nome_hemo = req.params.nome_hemo;
+
+const registros = await listarEstoqueService(nome_hemo);
+
+resp.status(200).send({
+    registros
 })
 }
 catch (error) {

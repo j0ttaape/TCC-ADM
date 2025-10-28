@@ -1,4 +1,4 @@
-import { adicionarNoEstoque, retirarDoEstoque } from "../../repository/estoque/estoqueRepository.js";
+import { adicionarNoEstoque, retirarDoEstoque, listarEstoqueHemocentro } from "../../repository/estoque/estoqueRepository.js";
 import validarInserirEstoque, { validarRetirarEstoque } from "../../validation/estoque/estoqueValidation.js"
 
 export async function inserirEstoqueService(infos,id_adm){
@@ -19,6 +19,16 @@ export async function retirarEstoqueService(infos,id_adm){
         const mensagem = await retirarDoEstoque(infos,id_adm);
 
         return mensagem;
+    }
+    catch (error) {
+    throw error
+    }
+}
+
+export async function listarEstoqueService(nome_hemo){
+    try {
+        const estoque = await listarEstoqueHemocentro(nome_hemo);
+        return estoque;
     }
     catch (error) {
     throw error
