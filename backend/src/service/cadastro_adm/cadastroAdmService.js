@@ -1,5 +1,5 @@
-import { concederPermissao, listarPedidos, permissaoAdm,  } from "../../repository/cadastro_adm/cadastroAdmRepository.js"
-import validarCadastroAdm, { validarConcederPermissao } from "../../validation/cadastro_adm/cadastroAdmValidation.js";
+import { concederPermissao, listarPedidos, loginAdm, permissaoAdm,  } from "../../repository/cadastro_adm/cadastroAdmRepository.js"
+import validarCadastroAdm, { validarConcederPermissao, validarlogarAdm, validarLoginAdm } from "../../validation/cadastro_adm/cadastroAdmValidation.js";
 
 export async function permissaoAdmService(informacoes){
 try {
@@ -29,15 +29,31 @@ catch (error) {
 
 }
 
-export async function concederPermissaoService(id_requerido,nome){
+export async function concederPermissaoService(id_requerido,id_adm){
     try {
     validarConcederPermissao(id_requerido);
 
-    const resposta = await concederPermissao(id_requerido,nome);
+    const resposta = await concederPermissao(id_requerido,id_adm);
 
     return resposta;
 
     }
+    catch (error) {
+        throw error
+    }
+}
+
+
+export async function loginADM(requisitos){
+    try {
+    validarLoginAdm(requisitos);
+    
+    const registros = await loginAdm(requisitos);
+
+    validarlogarAdm(registros);
+
+    return registros;
+    } 
     catch (error) {
         throw error
     }

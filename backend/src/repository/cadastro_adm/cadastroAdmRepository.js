@@ -45,12 +45,12 @@ export async function listarPedidos(){
     return registros;
 }
 
-export async function concederPermissao(id_requerido,nome){
+export async function concederPermissao(id_requerido,id_adm){
     const comando = `
     select permissao from cadastro_adm
-    where nome = ?
+    where id_adm = ?
     `
-    const [adm] = await connection.query(comando,[nome]);
+    const [adm] = await connection.query(comando,[id_adm]);
 
     if (adm.length === 0) {
         return 'Administrador não encontrado';
@@ -75,4 +75,16 @@ export async function concederPermissao(id_requerido,nome){
     }
 
 
+}
+
+export async function loginAdm(requisitos){
+    const comando = `
+    select * from cadastro_adm 
+    where email = ?
+    and senha = MD5(?)
+    `
+    const [registros] = await connection.query(comando,[requisitos.email,requisitos.senha]);
+
+    
+    return registros;
 }

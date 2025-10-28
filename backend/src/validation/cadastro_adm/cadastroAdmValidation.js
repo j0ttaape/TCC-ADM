@@ -20,3 +20,18 @@ if(!id_requerido)
 throw new Error('É necessárioo informar o id de requerimento');
 
 }
+
+export function validarLoginAdm(requisitos){
+    if(!requisitos.email)
+        throw new Error('É necessário nos informar o email');
+    if(!requisitos.senha)
+        throw new Error('É necessário nos informar a senha');
+}
+
+export function validarlogarAdm(registros){
+if(registros.length == 0 )
+    throw new Error('Administrador não cadastrado');
+if(registros[0].permissao == false)
+    throw new Error('Você não tem permissão para logar');
+
+}
