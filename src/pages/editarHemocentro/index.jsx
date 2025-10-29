@@ -28,7 +28,7 @@ export default function EditarHemocentro() {
 
     const carregarEstoque = async (nome) => {
         try {
-            const response = await axios.get(`http://localhost:5010/listarEstoque/${nome}`);
+            const response = await axios.get(`http://localhost:5010/listarEstoque/${nome}?t=${Date.now()}`);
             setEstoque(response.data.registros || []);
         } catch (error) {
             console.error('Erro ao carregar estoque:', error);
@@ -75,13 +75,13 @@ export default function EditarHemocentro() {
             await axios.put(`http://localhost:5010/${endpoint}`, data, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             });
+            await carregarEstoque(selectedHemocentro.nome_hemocentro);
             alert(`${acao === 'adicionar' ? 'Adicionado' : 'Retirado'} com sucesso!`);
-            carregarEstoque(selectedHemocentro.nome_hemocentro);
         } catch (error) {
             alert(`Erro ao ${acao}`);
         } finally {
             setLoading(false);
-        }   
+        }
 
     };
 
@@ -230,6 +230,9 @@ export default function EditarHemocentro() {
             });
             alert('Dia removido com sucesso!');
             carregarMeses();
+            if (mesSelecionado) {
+                carregarDatas(mesSelecionado);
+            }
         } catch (error) {
             alert('Erro ao remover dia');
        } finally {
@@ -333,26 +336,34 @@ export default function EditarHemocentro() {
                                                 <input
                                                     type="number"
                                                     placeholder="Quantidade"
-                                                    min="1"
+                                                    min="0"
                                                     id={`quant-${item.tipo_sanguineo}`}
                                                 />
                                                 <input
                                                     type="number"
                                                     placeholder="Máx"
-                                                    min="1"
+                                                    min="0"
                                                     id={`max-${item.tipo_sanguineo}`}
                                                 />
-                                                <button onClick={() => {
-                                                    const quant = document.getElementById(`quant-${item.tipo_sanguineo}`).value;
-                                                    const max = document.getElementById(`max-${item.tipo_sanguineo}`).value;
-                                                    handleEstoqueChange(item.tipo_sanguineo, quant, max, 'adicionar');
+                                                <button onClick={async () => {
+                                                    const quantInput = document.getElementById(`quant-${item.tipo_sanguineo}`);
+                                                    const maxInput = document.getElementById(`max-${item.tipo_sanguineo}`);
+                                                    const quant = quantInput.value || 0;
+                                                    const max = maxInput.value || 0;
+                                                    await handleEstoqueChange(item.tipo_sanguineo, quant, max, 'adicionar');
+                                                    quantInput.value = '';
+                                                    maxInput.value = '';
                                                 }}>
                                                     Adicionar
                                                 </button>
-                                                <button onClick={() => {
-                                                    const quant = document.getElementById(`quant-${item.tipo_sanguineo}`).value;
-                                                    const max = document.getElementById(`max-${item.tipo_sanguineo}`).value;
-                                                    handleEstoqueChange(item.tipo_sanguineo, quant, max, 'retirar');
+                                                <button onClick={async () => {
+                                                    const quantInput = document.getElementById(`quant-${item.tipo_sanguineo}`);
+                                                    const maxInput = document.getElementById(`max-${item.tipo_sanguineo}`);
+                                                    const quant = quantInput.value || 0;
+                                                    const max = maxInput.value || 0;
+                                                    await handleEstoqueChange(item.tipo_sanguineo, quant, max, 'retirar');
+                                                    quantInput.value = '';
+                                                    maxInput.value = '';
                                                 }}>
                                                     Retirar
                                                 </button>

@@ -10,6 +10,26 @@ if(!requisitos.data_final)
 if(!requisitos.horarios || !Array.isArray(requisitos.horarios) || requisitos.horarios.length === 0)
     throw new Error('Informe os horários');
 
+// Validar formato das datas
+if(!/^\d{2}\/\d{2}\/\d{4}$/.test(requisitos.data_inicial))
+    throw new Error('Formato da data inicial inválido. Use DD/MM/YYYY');
+if(!/^\d{2}\/\d{2}\/\d{4}$/.test(requisitos.data_final))
+    throw new Error('Formato da data final inválido. Use DD/MM/YYYY');
+
+// Verificar se data final é maior ou igual à data inicial
+const dataInicio = new Date(requisitos.data_inicial.split('/').reverse().join('-'));
+const dataFim = new Date(requisitos.data_final.split('/').reverse().join('-'));
+if (dataFim < dataInicio) {
+    throw new Error('Data final deve ser maior ou igual à data inicial');
+}
+
+// Verificar se o período não excede 30 dias
+const diffTime = Math.abs(dataFim - dataInicio);
+const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+if (diffDays > 30) {
+    throw new Error('O período máximo permitido é de 30 dias');
+}
+
 }
 
 export function validarAdicionarDia(requisitos){
