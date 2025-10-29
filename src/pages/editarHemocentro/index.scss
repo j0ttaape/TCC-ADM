@@ -140,60 +140,6 @@
                     }
                 }
 
-                .agenda-hierarquia {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 20px;
-                }
-
-                .meses, .datas, .horarios {
-                    background: #f9f9f9;
-                    padding: 15px;
-                    border-radius: 5px;
-                    border: 1px solid #ddd;
-                }
-
-                .meses-list, .datas-list {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 10px;
-                    margin-top: 10px;
-                }
-
-                .meses-list button, .datas-list button {
-                    padding: 8px 12px;
-                    border: 1px solid #ccc;
-                    background: white;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    transition: background 0.2s;
-                    color: black;
-                }
-
-                .meses-list button:hover, .datas-list button:hover {
-                    background: #e0e0e0;
-                }
-
-                .meses-list button.selected, .datas-list button.selected {
-                    background: #007bff;
-                    color: white;
-                    border-color: #007bff;
-                }
-
-                .horarios-list {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 10px;
-                    margin-top: 10px;
-                }
-
-                .horario-item {
-                    background: white;
-                    padding: 8px 12px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                }
-
                 .estoque-list {
                     display: flex;
                     flex-direction: column;
@@ -247,9 +193,196 @@
                         }
                     }
                 }
+
+                .agenda-hierarquia {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                }
+
+                .meses, .datas, .horarios {
+                    background: #f9f9f9;
+                    padding: 15px;
+                    border-radius: 5px;
+                    border: 1px solid #ddd;
+                }
+
+                .meses-list, .datas-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    margin-top: 10px;
+                }
+
+                .meses-list button, .datas-list button {
+                    padding: 8px 12px;
+                    border: 1px solid #ccc;
+                    background: white;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                    color: black;
+
+                    .remover-dia-btn {
+                        margin-left: 10px;
+                        padding: 4px 8px;
+                        background: #dc3545;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 0.8rem;
+
+                        &:hover {
+                            background: #c82333;
+                        }
+                    }
+                }
+
+                .meses-list button:hover, .datas-list button:hover {
+                    background: #e0e0e0;
+                }
+
+                .meses-list button.selected, .datas-list button.selected {
+                    background: #007bff;
+                    color: white;
+                    border-color: #007bff;
+                }
+
+                .horarios-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    margin-top: 10px;
+                }
+
+                .horario-item {
+                    background: white;
+                    padding: 8px 12px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    button {
+                        margin-left: 10px;
+                        background: #dc3545;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        padding: 4px 8px;
+
+                        &:hover {
+                            background: #c82333;
+                        }
+                    }
+                }
+
+                .agenda-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    margin-top: 20px;
+
+                    .agenda-item {
+                        background: white;
+                        padding: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        button {
+                            background: #dc3545;
+                            color: white;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            padding: 4px 8px;
+
+                            &:hover {
+                                background: #c82333;
+                            }
+                        }
+                    }
+                }
+
+                .add-form {
+                    background: white;
+                    padding: 15px;
+                    border-radius: 5px;
+                    border: 1px solid #ddd;
+                    margin-bottom: 20px;
+
+                    h4 {
+                        margin-bottom: 10px;
+                    }
+
+                    .form-group {
+                        margin-bottom: 10px;
+
+                        label {
+                            display: block;
+                            margin-bottom: 5px;
+                        }
+
+                        input, textarea {
+                            width: 100%;
+                            padding: 8px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                        }
+
+                        textarea {
+                            resize: vertical;
+                        }
+                    }
+
+                    button {
+                        padding: 8px 16px;
+                        background: #28a745;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+
+                        &:hover {
+                            background: #218838;
+                        }
+                    }
+                }
             }
         }
     }
+}
+
+.meses-container, .datas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.mes-card, .dia-card {
+    padding: 12px 18px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.mes-card:hover, .dia-card:hover {
+    background-color: #f2f2f2;
+}
+
+.mes-card.ativo, .dia-card.ativo {
+    background-color: #c41740;
+    color: white;
+    border-color: #c41740;
 }
 
 @media (max-width: 768px) {

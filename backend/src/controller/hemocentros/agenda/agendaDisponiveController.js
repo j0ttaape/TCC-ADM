@@ -1,10 +1,12 @@
 import { Router } from "express";
+import { getAuthentication } from "../../../utils/jwt.js";
 import { adicionarSemanaService, adicionarDiaService, listarAgendaService, listarMesesService, listarDatasPorMesService, listarHorariosPorDataService, deletarDiaAgendaService, deletarHorarioAgendaService } from "../../../service/hemocentros/agenda/agendaDisponivelService.js";
 
 
 const age = Router();
+const Autenticador = getAuthentication();
 
-age.post('/adicionarSemana', async (req,resp) => {
+age.post('/adicionarSemana', Autenticador, async (req,resp) => {
 try {
     const requisitos = req.body;
 
@@ -22,7 +24,7 @@ catch (error) {
 
 })
 
-age.post('/adicionarDia', async (req,resp) => {
+age.post('/adicionarDia', Autenticador, async (req,resp) => {
 try {
     const requisitos = req.body;
 
@@ -40,24 +42,9 @@ catch (error) {
 
 })
 
-age.get('/listarAgenda/:nomeHemo', async(req,resp) => {
-try {
-const nome = req.params.nomeHemo;
 
-const registros = await listarAgendaService(nome);
 
-resp.status(201).send({
-    registros
-})
-}
-catch (error) {
-    global.logErro(error);
-    resp.status(401).send(global.criarErro(error));
-}
-
-})
-
-age.get('/listarMeses/:nomeHemo', async(req,resp) => {
+age.get('/listarMeses/:nomeHemo', Autenticador, async(req,resp) => {
 try {
 const nome = req.params.nomeHemo;
 
@@ -74,7 +61,7 @@ catch (error) {
 
 })
 
-age.get('/listarDatas/:nomeHemo/:mes', async(req,resp) => {
+age.get('/listarDatas/:nomeHemo/:mes', Autenticador, async(req,resp) => {
 try {
 const nome = req.params.nomeHemo;
 const mes = req.params.mes;
@@ -92,7 +79,7 @@ catch (error) {
 
 })
 
-age.post('/listarHorarios/:nomeHemo', async(req,resp) => {
+age.post('/listarHorarios/:nomeHemo', Autenticador, async(req,resp) => {
 try {
 const nome = req.params.nomeHemo;
 const data = req.body.data
@@ -110,7 +97,7 @@ catch (error) {
 
 })
 
-age.delete('/deletarDiaAgenda/:nomeHemo', async (req,resp) => {
+age.delete('/deletarDiaAgenda/:nomeHemo', Autenticador, async (req,resp) => {
 try {
   const nome = req.params.nomeHemo;
   const data = req.body.data;
@@ -129,7 +116,7 @@ catch (error) {
 
 })
 
-age.delete('/deletarHorarioAgenda/:nomeHemo', async (req,resp) => {
+age.delete('/deletarHorarioAgenda/:nomeHemo', Autenticador, async (req,resp) => {
 try {
   const nome = req.params.nomeHemo;
   const data = req.body.data;

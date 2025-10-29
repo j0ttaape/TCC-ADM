@@ -1,26 +1,26 @@
 
 
 export default function validarAdicionarSemana(requisitos){
-if(!requisitos.nome)
+if(!requisitos.nome_hemo)
     throw new Error('É necessário escolher hemocentro');
-if(!requisitos.hComeco)
-    throw new Error('Informe o horário de início');
-if(!requisitos.hFim)
-    throw new Error('Informe o horário final');
-if(!requisitos.diaInicio)
-    throw new Error('Informe a data de início');
+if(!requisitos.data_inicial)
+    throw new Error('Informe a data inicial');
+if(!requisitos.data_final)
+    throw new Error('Informe a data final');
+if(!requisitos.horarios || !Array.isArray(requisitos.horarios) || requisitos.horarios.length === 0)
+    throw new Error('Informe os horários');
 
 }
 
 export function validarAdicionarDia(requisitos){
-if(!requisitos.nome)
+if(!requisitos.nome_hemo)
     throw new Error('É necessário escolher hemocentro');
-if(!requisitos.hComeco)
+if(!requisitos.data)
+    throw new Error('Informe a data');
+if(!requisitos.horario_inicio)
     throw new Error('Informe o horário de início');
-if(!requisitos.hFim)
-    throw new Error('Informe o horário final');
-if(!requisitos.dia)
-    throw new Error('Informe a data do dia');
+if(!requisitos.horario_fim)
+    throw new Error('Informe o horário de fim');
 
 }
 
