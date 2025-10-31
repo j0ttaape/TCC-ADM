@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../../components/header/index.jsx';
 import './index.scss';
@@ -20,13 +20,10 @@ export default function EditarHemocentro() {
 
 
 
-    useEffect(() => {
-        if (hemoFromState) {
-            carregarEstoque(hemoFromState.nome_hemocentro);
-        }
-    }, []);
+
 
     const carregarEstoque = async (nome) => {
+        console.log('Carregando estoque para:', nome);
         try {
             const response = await axios.get(`http://localhost:5010/listarEstoque/${nome}?t=${Date.now()}`);
             setEstoque(response.data.registros || []);
@@ -246,6 +243,12 @@ export default function EditarHemocentro() {
         }
     }, [activeTab]);
 
+    useEffect(() => {
+        if (activeTab === 'estoque' && selectedHemocentro) {
+            carregarEstoque(selectedHemocentro.nome_hemocentro);
+        }
+    }, [activeTab, selectedHemocentro]);
+
     return (
         <div className='container-editar-hemo'>
             <Header />
@@ -327,7 +330,7 @@ export default function EditarHemocentro() {
                             <div className='tab-content'>
                                 <h3>Gerenciar Estoque</h3>
                                 <div className='estoque-list'>
-                                    {estoque.map(item => (
+                                    {Array.isArray(estoque) && estoque.map(item => (
                                         <div key={item.tipo_sanguineo} className='estoque-item'>
                                             <h4>{item.tipo_sanguineo}</h4>
                                             <p>Bolsas: {item.quantidade_bolsas}</p>

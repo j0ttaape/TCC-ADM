@@ -9,7 +9,7 @@ export async function inserirEstoqueService(infos,id_adm){
         return mensagem;
     }
     catch (error) {
-    throw error
+        throw error;
     }
 }
 
@@ -21,7 +21,7 @@ export async function retirarEstoqueService(infos,id_adm){
         return mensagem;
     }
     catch (error) {
-    throw error
+        throw error;
     }
 }
 
@@ -31,6 +31,6 @@ export async function listarEstoqueService(nome_hemo){
         return estoque;
     }
     catch (error) {
-    throw error
+        throw error;
     }
 }

@@ -138,6 +138,6 @@ export async function listarEstoqueHemocentro(nome_hemo){
         return estoque;
     }
     else{
-        return 'Hemocentro não encontrado'
+        throw new Error('Hemocentro não encontrado');
     }
 }
