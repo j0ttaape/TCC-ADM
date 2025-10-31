@@ -62,8 +62,8 @@ export default function EditarHemocentro() {
         const data = {
             nome_hemo: selectedHemocentro.nome_hemocentro,
             tipo_sanguineo: tipo,
-            quantidade: parseInt(quantidade),
-            quantidade_maxima: parseInt(quantidadeMaxima)
+            quantidade: parseFloat(quantidade),
+            quantidade_maxima: parseFloat(quantidadeMaxima)
         };
 
         try {

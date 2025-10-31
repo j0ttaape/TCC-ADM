@@ -26,7 +26,7 @@ export default function CadastrarHemo() {
 
         catch (err) {
             const errorMessage = err.response?.data?.erro || err.message;
-            alert('Erro ao cadastrar hemocentro' + errorMessage);
+            alert(errorMessage);
         }
     };
 
