@@ -4,10 +4,10 @@ import validarCadastroHemocentro from "../../validation/cadastrarHemo/cadastrarH
 export default async function cadastrarHemocentroService(informacoes){
 
     try {
-        validarCadastroHemocentro(informacoes);
+        await validarCadastroHemocentro(informacoes);
         let id = await cadastrarHemocentro(informacoes);
         return id;
-    } 
+    }
     catch (error) {
         throw error;
     }

@@ -126,16 +126,23 @@ return affectedRows;
 }
 
 export async function listarMeses(nome){
+const comando2 = `
+select id_hemocentro from hemocentros 
+where nome_hemocentro = ?
+`
+const [id] = await connection.query(comando2,[nome]);
+
+
 const comando = `
 select distinct date_format(a.data_disponivel, '%m/%Y') as mes, min(a.data_disponivel) as data_min
 from agenda a
 inner join hemocentros h on a.id_hemocentro = h.id_hemocentro
-where h.nome_hemocentro = ?
+where h.id_hemocentro = ?
 group by date_format(a.data_disponivel, '%m/%Y')
 order by data_min asc;
 `
 
-const [registros] = await connection.query(comando,[nome] );
+const [registros] = await connection.query(comando,[id[0].id_hemocentro] );
 
 return registros;
 
