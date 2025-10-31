@@ -1,8 +1,6 @@
 create database tcc;
 use tcc;
 
-
-
 CREATE TABLE cadastro_users (
     id_cadastro INT AUTO_INCREMENT PRIMARY KEY,     
     nome_completo VARCHAR(150) NOT NULL,
@@ -10,14 +8,18 @@ CREATE TABLE cadastro_users (
     senha VARCHAR(255) NOT NULL,                
     cpf CHAR(11) NOT NULL UNIQUE,             
     telefone VARCHAR(15),
-    estado CHAR(2),                            
+    estado CHAR(2),  
+      tipo_sanguineo ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
     sexo ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
     origem VARCHAR(100),                      
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
 create table cadastro_adm (
 	id_adm int auto_increment primary key,
+    nome varchar (200),
 	email varchar (100),
 	senha varchar (50),
     permissao boolean
@@ -49,8 +51,9 @@ CREATE TABLE agendamentos (
     email VARCHAR(100) NOT NULL,
     telefone VARCHAR(20),
     estado VARCHAR(50),
+    cpf char (11),
     cidade VARCHAR(100),
-    tipo_sanguineo ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
+    tipo_sanguineo ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-','N찾o sei'),
     data_agendamento DATE,
     horario TIME,
     observacoes TEXT,
@@ -61,24 +64,40 @@ CREATE TABLE agendamentos (
     FOREIGN KEY (hemocentro_id) REFERENCES hemocentros(id_hemocentro) ON DELETE CASCADE
 );
 
-
 create table agenda_user (
 	id_agenda int auto_increment primary key,
     data_disponivel date,
     horario_disponivel time,
     hemocentros_id int,
-    foreign key (hemocentros_id) references hemocentros (id_hemocentro)
+    usuario_id int,
+    foreign key (usuario_id) references cadastro_users (id_cadastro) ON DELETE CASCADE,
+    foreign key (hemocentros_id) references hemocentros (id_hemocentro) ON DELETE CASCADE
 );
 
 create table estoque (
 id int primary key auto_increment,
 tipo_sanguineo enum('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
-quantidade_bolsas int,
-quntidade_maxima int,
+quantidade_bolsas decimal (10,2),
+quantidade_maxima decimal (10,2),
 id_hemocentro int,
 
 foreign key (id_hemocentro) references hemocentros (id_hemocentro)
 );
 
 
-select * from hemocentros
+create table voluntarios(
+id int primary key auto_increment,
+nome varchar (200),
+email varchar (200),
+cpf char (11),
+telefone char (11),
+disponibilidade varchar (1000),
+mensagem varchar (1000),
+usuario_id int,
+foreign key (usuario_id) references cadastro_users (id_cadastro) on delete cascade
+);
+
+
+select * from agenda;
+
+
