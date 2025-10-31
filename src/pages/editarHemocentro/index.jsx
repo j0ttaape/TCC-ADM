@@ -75,7 +75,8 @@ export default function EditarHemocentro() {
             await carregarEstoque(selectedHemocentro.nome_hemocentro);
             alert(`${acao === 'adicionar' ? 'Adicionado' : 'Retirado'} com sucesso!`);
         } catch (error) {
-            alert(`Erro ao ${acao}`);
+            const errorMessage = error.response?.data?.erro || error.message || `Erro ao ${acao}`;
+            alert(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -163,10 +164,11 @@ export default function EditarHemocentro() {
             await axios.post('http://localhost:5010/adicionarSemana', data, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             });
-            alert('Semana adicionada com sucesso!');
+            alert('Dias adicionados');
             carregarMeses();
         } catch (error) {
-            alert('Erro ao adicionar semana');
+            const errorMessage = error.response?.data?.erro || error.message || 'Erro ao adicionar semana';
+            alert(errorMessage);
         } finally {
             setLoading(false);
         }

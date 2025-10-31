@@ -13,7 +13,7 @@ try {
     const rows = await adicionarSemanaService(requisitos);
 
     resp.status(201).send({
-        mensagem:"Horarios da semana inseridos",
+        mensagem:"Dias adicionados",
         rows
     });
 }

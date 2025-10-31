@@ -31,7 +31,7 @@ export async function adicionarNoEstoque(infos, id_adm){
                 const novaMaxima = estoqueAtual[0].quantidade_maxima + infos.quantidade_maxima;
 
                 if (novaQuantidade > novaMaxima) {
-                    return 'A quantidade de bolsas não pode exceder a quantidade máxima';
+                    throw new Error('A quantidade de bolsas não pode exceder a quantidade máxima');
                 }
             }
 
