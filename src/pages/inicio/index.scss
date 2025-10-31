@@ -1,3 +1,49 @@
 .container-main{
     margin-left: 20rem ;
+    padding: 2rem;
+}
+
+.pedidos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pedido-item {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pedido-item h3 {
+    margin: 0;
+    color: #183758;
+}
+
+.pedido-item p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+.pedido-item button {
+    padding: 0.5rem 1rem;
+    background-color: #183758;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pedido-item button:hover {
+    background-color: #0f2533;
+}
+
+.pedido-item button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

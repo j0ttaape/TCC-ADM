@@ -18,7 +18,7 @@ export default function Header() {
 
             <div className="botoes">  
 
-            <Link to={'/'}><FaHome className="icon" />  Inicio</Link>
+            <Link to={'/inicio'}><FaHome className="icon" />  Inicio</Link>
 
             </div>
 

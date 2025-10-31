@@ -17,7 +17,8 @@ export default function Navegação(){
         <BrowserRouter>
         <Routes>
 
-            <Route path="/" element={<Inicio/>}/>
+            <Route path="/" element={<Login/>}/>
+            <Route path="/inicio" element={<Inicio/>}/>
             <Route path="/CadastrarHemo" element={<CadastrarHemo/>}/>
             <Route path="/Buscarhemo" element={<Buscarhemo/>}/>
             <Route path="/GerenciarDoadores" element={<GerenciarDoadores/>}/>
