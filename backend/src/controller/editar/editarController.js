@@ -1,7 +1,7 @@
 import Router from "express";
 import editarHemocentro from "../../repository/editar/editarRepository.js";
 
-const editar = Router();   
+const editar = Router();
 
 
 editar.put('/editarHemocentro/:id_hemocentro', async (req,resp) => {

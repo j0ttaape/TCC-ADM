@@ -1,9 +1,7 @@
 import { Router } from "express";
 
-import {getAuthentication} from "../../utils/jwt.js"
 import { buscarNomeService, listarHemocentrosService } from "../../service/hemocentros/hemocentrosService.js";
 
-const authentication = getAuthentication();
 const hemo = Router();
 
 
@@ -31,7 +29,7 @@ try {
         registros
     });
 
-} 
+}
 catch (error) {
     global.logErro(error);
     resp.status(401).send(global.criarErro(error));

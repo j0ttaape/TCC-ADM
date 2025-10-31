@@ -4,7 +4,7 @@ import validarInserirEstoque, { validarRetirarEstoque } from "../../validation/e
 export async function inserirEstoqueService(infos,id_adm){
     try {
         validarInserirEstoque(infos);
-        const mensagem = await adicionarNoEstoque(infos,id_adm);
+        const mensagem = await adicionarNoEstoque(infos);
 
         return mensagem;
     }
@@ -16,7 +16,7 @@ export async function inserirEstoqueService(infos,id_adm){
 export async function retirarEstoqueService(infos,id_adm){
     try {
         validarRetirarEstoque(infos);
-        const mensagem = await retirarDoEstoque(infos,id_adm);
+        const mensagem = await retirarDoEstoque(infos);
 
         return mensagem;
     }

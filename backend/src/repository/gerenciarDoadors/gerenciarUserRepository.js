@@ -3,11 +3,15 @@ import connection from "../connection.js";
 
 export async function listarUser() {
     const comando = `
-    select a.id, c.nome_completo, h.nome_hemocentro, a.tipo_sanguineo, a.data_agendamento,a.telefone,a.cpf
-from agendamentos a
-inner join cadastro_users c on a.usuario_id = c.id_cadastro
-inner join hemocentros h on a.hemocentro_id = h.id_hemocentro
-where a.data_agendamento is not null;
+    SELECT
+        c.id_cadastro AS id,
+        c.nome_completo,
+        c.cpf,
+        c.tipo_sanguineo,
+        c.telefone,
+        (SELECT MAX(a.data_agendamento) FROM agendamentos a WHERE a.usuario_id = c.id_cadastro AND a.data_agendamento < CURDATE()) AS ultima_doacao,
+        (SELECT MIN(a.data_agendamento) FROM agendamentos a WHERE a.usuario_id = c.id_cadastro AND a.data_agendamento >= CURDATE()) AS proxima_doacao
+    FROM cadastro_users c;
     `
     const [registros] = await connection.query(comando);
     return registros
@@ -15,11 +19,16 @@ where a.data_agendamento is not null;
 
 export async function buscarUser(cpf) {
     const comando = `
-    select a.id, c.nome_completo, h.nome_hemocentro, a.tipo_sanguineo, a.data_agendamento,a.telefone, a.cpf
-from agendamentos a
-inner join cadastro_users c on a.usuario_id = c.id_cadastro
-inner join hemocentros h on a.hemocentro_id = h.id_hemocentro
-where a.cpf= ?;
+    SELECT
+        c.id_cadastro AS id,
+        c.nome_completo,
+        c.cpf,
+        c.tipo_sanguineo,
+        c.telefone,
+        (SELECT MAX(a.data_agendamento) FROM agendamentos a WHERE a.usuario_id = c.id_cadastro AND a.data_agendamento < CURDATE()) AS ultima_doacao,
+        (SELECT MIN(a.data_agendamento) FROM agendamentos a WHERE a.usuario_id = c.id_cadastro AND a.data_agendamento >= CURDATE()) AS proxima_doacao
+    FROM cadastro_users c
+    WHERE c.cpf = ?;
     `
     const [registros] = await connection.query(comando, [cpf]);
     return registros

@@ -168,7 +168,8 @@ const handleDelete = async (id) => {
                                 <p><strong>Nome:</strong> {user.nome_completo || 'Não informado'}</p>
                                 <p><strong>CPF:</strong> {user.cpf || 'Não informado'}</p>
                                 <p><strong>Tipo Sanguíneo:</strong> {user.tipo_sanguineo || 'Não informado'}</p>
-                                <p><strong>Última Doação:</strong> {new Date(user.data_agendamento).toLocaleDateString('pt-BR')}</p>
+                                <p><strong>Última Doação:</strong> {user.ultima_doacao ? new Date(user.ultima_doacao).toLocaleDateString('pt-BR') : 'Ainda não doou'}</p>
+                                <p><strong>Próxima Doação:</strong> {user.proxima_doacao ? new Date(user.proxima_doacao).toLocaleDateString('pt-BR') : 'Não tem doação agendada'}</p>
                                 <p><strong>Contato:</strong> {user.telefone || 'Não informado'}</p>
                                 <div className='botoes-acao'>
                                     <button >Editar</button>

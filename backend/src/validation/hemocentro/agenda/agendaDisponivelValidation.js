@@ -23,6 +23,13 @@ if (dataFim < dataInicio) {
     throw new Error('Data final deve ser maior ou igual à data inicial');
 }
 
+// Verificar se a data inicial é anterior a hoje
+const hoje = new Date();
+hoje.setHours(0, 0, 0, 0); // Definir para o início do dia
+if (dataInicio < hoje) {
+    throw new Error('Data inicial não pode ser anterior a hoje');
+}
+
 // Verificar se o período não excede 30 dias
 const diffTime = Math.abs(dataFim - dataInicio);
 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -41,6 +48,18 @@ if(!requisitos.horario_inicio)
     throw new Error('Informe o horário de início');
 if(!requisitos.horario_fim)
     throw new Error('Informe o horário de fim');
+
+// Validar formato da data
+if(!/^\d{2}\/\d{2}\/\d{4}$/.test(requisitos.data))
+    throw new Error('Formato da data inválido. Use DD/MM/YYYY');
+
+// Verificar se a data é anterior a hoje
+const data = new Date(requisitos.data.split('/').reverse().join('-'));
+const hoje = new Date();
+hoje.setHours(0, 0, 0, 0); // Definir para o início do dia
+if (data < hoje) {
+    throw new Error('Data não pode ser anterior a hoje');
+}
 
 }
 
@@ -61,6 +80,14 @@ if(!data)
     throw new Error('É necessário informar a data');
 if(!/^\d{2}\/\d{2}\/\d{4}$/.test(data))
     throw new Error('Formato da data inválido. Use DD/MM/YYYY');
+
+// Verificar se a data é anterior a hoje
+const dataObj = new Date(data.split('/').reverse().join('-'));
+const hoje = new Date();
+hoje.setHours(0, 0, 0, 0); // Definir para o início do dia
+if (dataObj < hoje) {
+    throw new Error('Data não pode ser anterior a hoje');
+}
 }
 
 export function validarHorario(horario){

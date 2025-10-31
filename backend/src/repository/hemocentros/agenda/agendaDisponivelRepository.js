@@ -64,6 +64,28 @@ where date_add(?, interval dias.dia day) <= ?;
 `
 let affectedRows = 0;
 for (const horario of requisitos.horarios) {
+    // Calcular as datas para cada dia no intervalo
+    const diasNoIntervalo = [];
+    let dataAtual = new Date(diaInicioISO);
+    const dataFim = new Date(diaFimISO);
+    while (dataAtual <= dataFim) {
+        diasNoIntervalo.push(dataAtual.toISOString().split('T')[0]);
+        dataAtual.setDate(dataAtual.getDate() + 1);
+    }
+
+    // Verificar se algum horário já existe para qualquer dia no intervalo
+    for (const dia of diasNoIntervalo) {
+        const comandoVerificar = `
+        SELECT COUNT(*) as count
+        FROM agenda
+        WHERE id_hemocentro = ? AND data_disponivel = ? AND horario_disponivel = ?
+        `;
+        const [verificar] = await connection.query(comandoVerificar, [id, dia, horario]);
+        if (verificar[0].count > 0) {
+            throw new Error(`Horário ${horario} já existe na agenda para o dia ${dia.split('-').reverse().join('/')}`);
+        }
+    }
+
     const [rows] = await connection.query(comando2, [id, diaInicioISO, horario, horario, diaInicioISO, diaFimISO]);
     affectedRows += rows.affectedRows;
 }
@@ -117,6 +139,17 @@ values (?, ?, ?)
 
 let affectedRows = 0;
 for (const horario of horarios) {
+    // Verificar se o horário já existe
+    const comandoVerificar = `
+    SELECT COUNT(*) as count
+    FROM agenda
+    WHERE id_hemocentro = ? AND data_disponivel = ? AND horario_disponivel = ?
+    `;
+    const [verificar] = await connection.query(comandoVerificar, [id, diaISO, horario]);
+    if (verificar[0].count > 0) {
+        throw new Error(`Horário ${horario} já existe na agenda para este dia`);
+    }
+
     const [rows] = await connection.query(comando2, [id, diaISO, horario]);
     affectedRows += rows.affectedRows;
 }

@@ -15,7 +15,7 @@ cad.put('/pedirPermissao', async(req,resp) => {
 
         resp.status(201).send({
             mensagem,
-            
+
         })
     }
     catch (error) {
@@ -30,15 +30,15 @@ cad.get('/listarPedidos', async (req,resp) => {
 
     try {
         const registros = await listarPedidosService();
-        
+
         resp.status(201).send({
             registros
         });
-    } 
+    }
     catch (error) {
         global.logErro(error);
         resp.status(401).send(global.criarErro(error));
-            
+
     }
 
 })
