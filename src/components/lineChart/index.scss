@@ -1,0 +1,43 @@
+.line-chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 920px;
+    margin: 20px auto;
+    padding: 18px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+    box-shadow: 0 6px 18px rgba(168, 98, 28, 0.06);
+    border: 1px solid rgba(168, 98, 28, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 30px rgba(168, 98, 28, 0.10);
+    }
+
+    .chart-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            color: #b85f14;
+            font-weight: 600;
+            padding-left: 6px;
+        }
+    }
+}
+
+.line-chart {
+    width: 100% !important;
+    height: 360px !important;
+}
+
+/* melhorar aparência de tooltips e legendas */
+.chartjs-tooltip {
+    font-size: 0.95rem;
+}

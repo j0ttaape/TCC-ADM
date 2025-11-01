@@ -37,7 +37,7 @@ export async function buscarUser(cpf) {
 export async function deletarAgendaUser(id) {
 
     const comando = `
-    delete from agendamentos where id = ?;
+    delete from cadastro_users where id_cadastro = ?;
     `
     const [registros] = await connection.query(comando, [id]);
     return registros
