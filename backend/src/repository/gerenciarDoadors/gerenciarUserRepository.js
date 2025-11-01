@@ -1,3 +1,4 @@
+import e from "cors";
 import connection from "../connection.js";
 
 
@@ -43,3 +44,38 @@ export async function deletarAgendaUser(id) {
     return registros
     
 }
+
+export async function atualizarUser(id, nome, telefone, tipoSanguineo) {
+
+    const comando = `
+    update cadastro_users
+    set nome_completo = ?,
+    telefone = ?,
+    tipo_sanguineo = ?
+    where id_cadastro = ?;
+    `
+    const [registros] = await connection.query(comando, [nome, telefone, tipoSanguineo, id]);
+    return registros;
+}
+
+export async function cadastrarUser(nome, cpf, telefone, tipoSanguineo) {
+
+    const comando = `
+    insert into cadastro_users (nome_completo, cpf, telefone, tipo_sanguineo)
+    values (?, ?, ?, ?);
+    `
+    const [registros] = await connection.query(comando, [nome, cpf, telefone, tipoSanguineo]);
+    return registros;
+}
+
+
+export async function atualizarUserAgenda(atualizacao,cpf) {
+    const comando =`
+    update agendamentos
+    set hemocentro_id = ?, data_agendamento = ?, horario_agendamento = ?, tipo_sanguineo = ?
+    where usuario_id = ?;
+    `
+    const [registros] = await connection.query(comando, [atualizacao.hemocentro_id, atualizacao.data_agendamento, atualizacao.horario_agendamento, atualizacao.tipo_sanguineo,cpf]);
+    return registros;
+}
+

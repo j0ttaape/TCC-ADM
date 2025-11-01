@@ -11,17 +11,25 @@
 
         .card{
             display: flex;
+            gap: 2rem;
             align-items: center;
             padding: 1rem;
             border: 2px solid #2a8ced;
             background-color: white;
             border-radius: 10px;
 
+            .icon{
+                background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 9px;
+                border-radius: 10px;
+                margin-left: 1rem;
+                color: white;
+            }
             h1{
                 font-size: 0.8rem;
-                color: #183758;
-                margin-bottom: 1rem;
-                font-weight: bold;
+                color: #a6a5a5;
+                margin-bottom: 0.5rem;
+                font-weight: 200;
             }
 
             h2{

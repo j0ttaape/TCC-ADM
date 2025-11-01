@@ -1,0 +1,99 @@
+.doughnut-chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 24px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
+    box-shadow: 0 8px 32px rgba(139, 92, 246, 0.12), 0 2px 8px rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        border-radius: 16px 16px 0 0;
+    }
+
+
+    h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        text-align: center;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.025em;
+    }
+
+    p {
+        margin: 0;
+        font-size: 1rem;
+        color: #64748b;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.doughnut-chart {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+/* Custom tooltip styles */
+.chartjs-tooltip {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-size: 0.95rem !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .doughnut-chart-container {
+        margin: 16px;
+        padding: 20px;
+        max-width: none;
+
+        h1 {
+            font-size: 1.25rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        .chart-wrapper {
+            height: 250px;
+        }
+
+        .doughnut-chart {
+            max-width: 250px;
+            max-height: 250px;
+        }
+    }
+}

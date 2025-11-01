@@ -64,7 +64,9 @@ export default function Cads() {
                     <h1>Total de agendamentos</h1>
                     <h2>{agendamentos.length}</h2>
                     </div>
-                    <ChartBarDecreasing  size={32} />
+                    <div className="icon">
+                        <ChartBarDecreasing  size={28} />
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import BarChart from '../../components/barChart/barChart';
 import Cads from '../../components/cards/cads.jsx';
+import DoughnutChart from '../../components/doughnutChart/doughnutChart';
 import Header from '../../components/header/index.jsx';
 import LineChart from '../../components/lineChart/lineChart.jsx';
 import './index.scss'
@@ -10,8 +11,12 @@ export default function RelatorioGeral(){
             <Header />
             <section className='container-relatorio'>
                 <Cads/>
-                <LineChart/>
-                <BarChart/>
+
+                <div className='graficos'>
+                    <LineChart/>
+                    <BarChart/>
+                </div>
+                    <DoughnutChart/>
             </section>
         </div>
     )

@@ -174,7 +174,7 @@ const handleDelete = async (id) => {
                                 <div className='botoes-acao'>
                                     <button >Editar</button>
                                     <button onClick={() => handleDelete(user.id)}>Excluir</button>
-                                </div>
+                                </div>  
                             </div>
                         ))
                     )}
