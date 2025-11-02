@@ -58,8 +58,9 @@ const BarChart = () => {
                 hoverBackgroundColor: 'rgba(79, 70, 229, 1)',
                 borderColor: 'rgba(79, 70, 229, 1)',
                 borderWidth: 1,
-                borderRadius: 6,
+                borderRadius: 4,
                 borderSkipped: false,
+                maxBarThickness: 40,
             }
         ]
     }

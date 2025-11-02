@@ -21,10 +21,13 @@ export async function relatorioGeralAgendamentos() {
 
 export async function relatorioGeralHemocentros() {
     const comando = `
-    select * from hemocentros
+ select h.nome_hemocentro as hemocentro, count(a.id) as totalAgendamentos
+    from agendamentos a
+    inner join hemocentros h on a.hemocentro_id = h.id_hemocentro
+    group by h.id_hemocentro, h.nome_hemocentro;
     `
 
     const [registros] = await connection.query(comando);
 
     return registros;
-}  
+}

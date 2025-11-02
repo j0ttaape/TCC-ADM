@@ -49,14 +49,19 @@ export default function Cads() {
                         <h1>Total de cadastros</h1>
                         <h2>{cadastros.length}</h2>
                     </div>
+                    <div className="icon">
                     <Users size={32} />
+                    </div>
                 </div>
                 <div className='card'>
                     <div className="info">
                         <h1>Total de hemocentros</h1>
                         <h2>{hemocentros.length}</h2>
                     </div>
+                    <div className="icon">
+
                     <MapPin size={32} />
+                    </div>
                 </div>
                 <div className='card'>
                     <div className="info">

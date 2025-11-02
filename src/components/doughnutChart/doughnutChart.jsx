@@ -12,19 +12,16 @@ const DoughnutChart = () => {
     useEffect(() => {
         const loadDados = async () => {
             try {
-                // Buscar dados de agendamentos e cadastros para criar distribuição
-                const [agendamentosRes, cadastrosRes] = await Promise.all([
-                    api.get('/relatorioGeral/agendamentos'),
-                    api.get('/relatorioGeral/cadastros')
-                ]);
+                // Buscar dados de hemocentros com contagem de agendamentos
+                const response = await api.get('/relatorioGeral/hemocentros');
 
-                const agendamentos = agendamentosRes.data.length;
-                const cadastros = cadastrosRes.data.length;
+                const hemocentros = response.data.map((item, index) => ({
+                    label: item.hemocentro,
+                    value: item.totalAgendamentos,
+                    color: `hsl(${index * 360 / response.data.length}, 70%, 50%)`
+                }));
 
-                setDados([
-                    { label: 'Agendamentos', value: agendamentos, color: '#3b82f6' },
-                    { label: 'Cadastros', value: cadastros, color: '#8b5cf6' }
-                ]);
+                setDados(hemocentros);
             } catch (error) {
                 console.error('Erro ao carregar dados:', error);
             }
@@ -89,9 +86,7 @@ const DoughnutChart = () => {
                     label: function(context) {
                         const label = context.label || '';
                         const value = context.parsed || 0;
-                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                        const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                        return `${label}: ${value} (${percentage}%)`;
+                        return `${label}: ${value}`;
                     }
                 }
             }
