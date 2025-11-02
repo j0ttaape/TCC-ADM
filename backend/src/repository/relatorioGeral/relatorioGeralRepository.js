@@ -31,3 +31,13 @@ export async function relatorioGeralHemocentros() {
 
     return registros;
 }
+
+export async function relatorioGeralBolsas(){
+    const comando = `
+    select * from geralQuantidadeLitros
+    `
+    const [registros] = await connection.query(comando);
+    
+    return registros;
+    
+}

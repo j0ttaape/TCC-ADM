@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { relatorioGeralAgendamentos, relatorioGeralCadastros, relatorioGeralHemocentros } from "../../repository/relatorioGeral/relatorioGeralRepository.js";
+import { relatorioGeralAgendamentos, relatorioGeralBolsas, relatorioGeralCadastros, relatorioGeralHemocentros } from "../../repository/relatorioGeral/relatorioGeralRepository.js";
 
 const relatorioGeral = Router();
 
@@ -31,6 +31,21 @@ relatorioGeral.get("/relatorioGeral/agendamentos", async (req,resp) => {
     } catch(err){
         global.logErro(err);
         resp.status(400).send(global.criarErro(err));
+    }
+})
+
+relatorioGeral.get('/relatorioQuantidadeBolsas', async(req,resp) => {
+    try {
+    const registros = await relatorioGeralBolsas();
+
+    resp.status(200).send({
+        registros
+    })
+    }
+    catch (error) {
+        global.logErro(error);
+        resp.status(400).send(global.criarErro(error));
+
     }
 })
 
