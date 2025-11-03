@@ -90,6 +90,21 @@ if (dataObj < hoje) {
 }
 }
 
+export function validarDataRemover(data){
+if(!data)
+    throw new Error('É necessário informar a data');
+if(!/^\d{2}\/\d{2}\/\d{4}$/.test(data))
+    throw new Error('Formato da data inválido. Use DD/MM/YYYY');
+
+// Para remoção, permitir datas menores ou iguais a hoje
+const dataObj = new Date(data.split('/').reverse().join('-'));
+const hoje = new Date();
+hoje.setHours(23, 59, 59, 999); // Definir para o final do dia
+if (dataObj > hoje) {
+    throw new Error('Data não pode ser futura para remoção');
+}
+}
+
 export function validarHorario(horario){
 if(!horario)
     throw new Error('É necessário informar o horário');

@@ -1,12 +1,18 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './index.scss'
 import "/src/index.scss"
 import { FaHome, FaPlusCircle, FaSearch, FaUsers, FaCalendarCheck, FaChartLine, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
 
   return (
     <div className="header-container">
@@ -43,11 +49,7 @@ export default function Header() {
 
             </div>
 
-            <div className={`botoes ${isActive('/Agendamentos') ? 'active' : ''}`}>
-
-            <Link to={'/Agendamentos'}><FaCalendarCheck className="icon" /> Agendamentos</Link>
-
-            </div>
+            
 
             <div className={`botoes ${isActive('/RelatorioGeral') ? 'active' : ''}`}>
 
@@ -58,6 +60,12 @@ export default function Header() {
             <div className={`botoes ${isActive('/Configuracao') ? 'active' : ''}`}>
 
             <Link to={'/Configuracao'}><FaCog className="icon" /> Configurações</Link>
+
+            </div>
+
+            <div className="botoes logout" onClick={handleLogout}>
+
+            <FaSignOutAlt className="icon" /> Sair
 
             </div>
 

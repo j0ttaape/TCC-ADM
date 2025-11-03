@@ -11,5 +11,13 @@
         margin-top: 2rem;
         justify-content: center;
     }
+
+    .graficos-secundarios{
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
     
 }

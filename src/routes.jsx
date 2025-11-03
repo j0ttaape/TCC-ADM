@@ -9,6 +9,7 @@ import Configuracao from "./pages/configuracao/index.jsx"
 import Login from "./pages/login/index.jsx";
 import CadastrarAdm from "./pages/cadastrarAdm/index.jsx";
 import EditarHemocentro from "./pages/editarHemocentro/index.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 
 export default function Navegação(){
@@ -18,16 +19,15 @@ export default function Navegação(){
         <Routes>
 
             <Route path="/" element={<Login/>}/>
-            <Route path="/inicio" element={<Inicio/>}/>
-            <Route path="/CadastrarHemo" element={<CadastrarHemo/>}/>
-            <Route path="/Buscarhemo" element={<Buscarhemo/>}/>
-            <Route path="/GerenciarDoadores" element={<GerenciarDoadores/>}/>
-            <Route path="/Agendamentos" element={<Agendamementos/>}/>
-            <Route path="/RelatorioGeral" element={<RelatorioGeral/>}/>
-            <Route path="/Configuracao" element={<Configuracao/>}/>
             <Route path="/Login" element={<Login/>}/>
             <Route path="/CadastrarAdm" element={<CadastrarAdm/>}/>
-            <Route path="/EditarHemocentro" element={<EditarHemocentro/>}/>
+            <Route path="/inicio" element={<ProtectedRoute><Inicio/></ProtectedRoute>}/>
+            <Route path="/CadastrarHemo" element={<ProtectedRoute><CadastrarHemo/></ProtectedRoute>}/>
+            <Route path="/Buscarhemo" element={<ProtectedRoute><Buscarhemo/></ProtectedRoute>}/>
+            <Route path="/GerenciarDoadores" element={<ProtectedRoute><GerenciarDoadores/></ProtectedRoute>}/>
+            <Route path="/RelatorioGeral" element={<ProtectedRoute><RelatorioGeral/></ProtectedRoute>}/>
+            <Route path="/Configuracao" element={<ProtectedRoute><Configuracao/></ProtectedRoute>}/>
+            <Route path="/EditarHemocentro" element={<ProtectedRoute><EditarHemocentro/></ProtectedRoute>}/>
 
 
 

@@ -1,5 +1,5 @@
 import { adicionarSemanaDisponivel, adicionarDiaDisponivel, listarAgenda, listarMeses, listarDatasPorMes, listarHorariosPorData, deletarDiaAgenda, deletarHorarioAgenda } from "../../../repository/hemocentros/agenda/agendaDisponivelRepository.js";
-import validarAdicionarSemana, { validarAdicionarDia, validarLista, validarMes, validarData, validarHorario } from "../../../validation/hemocentro/agenda/agendaDisponivelValidation.js";
+import validarAdicionarSemana, { validarAdicionarDia, validarLista, validarMes, validarData, validarDataRemover, validarHorario } from "../../../validation/hemocentro/agenda/agendaDisponivelValidation.js";
 
 export async function adicionarSemanaService(requisitos){
 try {
@@ -88,7 +88,7 @@ catch (error) {
 export async function deletarDiaAgendaService(nome,data) {
     try {
         validarLista(nome);
-        validarData(data);
+        validarDataRemover(data);
 
     const linhas = await deletarDiaAgenda(data,nome);
 

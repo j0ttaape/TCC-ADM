@@ -1,4 +1,5 @@
 import BarChart from '../../components/barChart/barChart';
+import BloodTypeChart from '../../components/bloodTypeChart/bloodTypeChart';
 import Cads from '../../components/cards/cads.jsx';
 import DoughnutChart from '../../components/doughnutChart/doughnutChart';
 import Header from '../../components/header/index.jsx';
@@ -16,7 +17,10 @@ export default function RelatorioGeral(){
                     <LineChart/>
                     <BarChart/>
                 </div>
+                <div className='graficos-secundarios'>
                     <DoughnutChart/>
+                    <BloodTypeChart/>
+                </div>
             </section>
         </div>
     )
