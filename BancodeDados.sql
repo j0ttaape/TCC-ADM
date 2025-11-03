@@ -98,6 +98,16 @@ foreign key (usuario_id) references cadastro_users (id_cadastro) on delete casca
 );
 
 
-select * from agenda;
+select * from agendamentos;
+
+create view doaçõesSemana As 
+select count(usuario_id) as quant_doação_semana from agendamentos
+where data_agendamento between curdate() and date_add(curdate(), interval 7 day);
+
+create view geralQuantidadeLitros as
+select distinct tipo_sanguineo, sum(quantidade_bolsas) As quantidade_Tipo from estoque
+group by tipo_sanguineo;
 
 
+
+select * from geralQuantidadeLitros;
