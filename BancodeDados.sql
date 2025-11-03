@@ -1,6 +1,7 @@
 create database tcc;
 use tcc;
 
+
 CREATE TABLE cadastro_users (
     id_cadastro INT AUTO_INCREMENT PRIMARY KEY,     
     nome_completo VARCHAR(150) NOT NULL,
@@ -9,7 +10,7 @@ CREATE TABLE cadastro_users (
     cpf CHAR(11) NOT NULL UNIQUE,             
     telefone VARCHAR(15),
     estado CHAR(2),  
-      tipo_sanguineo ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
+	tipo_sanguineo ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-','Não Sei'),
     sexo ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
     origem VARCHAR(100),                      
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
