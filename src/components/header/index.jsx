@@ -10,8 +10,10 @@ export default function Header() {
   const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/');
+    if (window.confirm("Deseja realmente sair?")) {
+      localStorage.removeItem('token');
+      navigate('/');
+    }
   };
 
   return (
