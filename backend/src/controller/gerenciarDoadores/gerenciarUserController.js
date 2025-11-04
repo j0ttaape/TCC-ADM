@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { buscarUser, deletarAgendaUser, listarUser } from "../../repository/gerenciarDoadors/gerenciarUserRepository.js";
+import { buscarUser, deletarAgendaUser, listarUser, atualizarUser } from "../../repository/gerenciarDoadors/gerenciarUserRepository.js";
 
 const gerenciarUser = Router();
 
@@ -17,6 +17,18 @@ gerenciarUser.get('/BuscarCpf/:cpf', async (req,resp) => {
     try{
         let cpf = req.params.cpf;
         const registros = await buscarUser(cpf);
+        resp.status(200).send(registros);
+        } catch(err){
+            global.logErro(err);
+            resp.status(400).send(global.criarErro(err));
+        }
+})
+
+gerenciarUser.put('/editarDoadores/:id', async (req,resp) => {
+    try{
+        let id = req.params.id;
+        const { nome_completo, telefone, tipo_sanguineo } = req.body;
+        const registros = await atualizarUser(id, nome_completo, telefone, tipo_sanguineo);
         resp.status(200).send(registros);
         } catch(err){
             global.logErro(err);
