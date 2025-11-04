@@ -9,6 +9,8 @@ export default function GerenciarDoadores(){
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [query, setQuery] = useState('');
+    const [editingUser, setEditingUser] = useState(null);
+    const [editForm, setEditForm] = useState({ nome_completo: '', telefone: '', tipo_sanguineo: '' });
 
     const carregarDoadores = async (e) => {
         if (e) {
@@ -89,14 +91,42 @@ export default function GerenciarDoadores(){
     }
 
 
+const handleEdit = (user) => {
+    setEditingUser(user.id);
+    setEditForm({
+        nome_completo: user.nome_completo || '',
+        telefone: user.telefone || '',
+        tipo_sanguineo: user.tipo_sanguineo || ''
+    });
+};
+
+const handleSaveEdit = async () => {
+    try {
+        const response = await api.put(`/editarDoadores/${editingUser}`, editForm);
+        if (response.status === 200) {
+            alert('Doador editado com sucesso!');
+            setEditingUser(null);
+            carregarDoadoresSimples();
+        }
+    } catch (error) {
+        console.error('Erro ao editar doador:', error);
+        alert('Erro ao editar doador. Verifique o console.');
+    }
+};
+
+const handleCancelEdit = () => {
+    setEditingUser(null);
+    setEditForm({ nome_completo: '', telefone: '', tipo_sanguineo: '' });
+};
+
 const handleDelete = async (id) => {
-    if (!window.confirm('Tem certeza que deseja excluir este agendamento?')) return;
+    if (!window.confirm('Tem certeza que deseja excluir este doador?')) return;
 
     try {
         const response = await api.delete(`/deletarDoadores/${id}`);
 
         if (response.status === 200) {
-            alert('Agendamento deletado com sucesso!');
+            alert('Doador deletado com sucesso!');
             // Recarrega a lista após deletar
             carregarDoadoresSimples();
         } else {
@@ -104,7 +134,7 @@ const handleDelete = async (id) => {
         }
 
     } catch (error) {
-        console.error('Erro ao deletar agendamento:', error);
+        console.error('Erro ao deletar doador:', error);
 
         // Debug detalhado
         if (error.response) {
@@ -117,7 +147,7 @@ const handleDelete = async (id) => {
             console.log('Erro na configuração:', error.message);
         }
 
-        alert('Erro ao deletar agendamento. Verifique o console.');
+        alert('Erro ao deletar doador. Verifique o console.');
     }
 }
 
@@ -165,16 +195,53 @@ const handleDelete = async (id) => {
                     ) : (
                         users.map((user) => (
                             <div key={user.id || user.cpf} className='grupo'>
-                                <p><strong>Nome:</strong> {user.nome_completo || 'Não informado'}</p>
-                                <p><strong>CPF:</strong> {user.cpf || 'Não informado'}</p>
-                                <p><strong>Tipo Sanguíneo:</strong> {user.tipo_sanguineo || 'Não informado'}</p>
-                                <p><strong>Última Doação:</strong> {user.ultima_doacao ? new Date(user.ultima_doacao).toLocaleDateString('pt-BR') : 'Ainda não doou'}</p>
-                                <p><strong>Próxima Doação:</strong> {user.proxima_doacao ? new Date(user.proxima_doacao).toLocaleDateString('pt-BR') : 'Não tem doação agendada'}</p>
-                                <p><strong>Contato:</strong> {user.telefone || 'Não informado'}</p>
-                                <div className='botoes-acao'>
-                                    <button >Editar</button>
-                                    <button onClick={() => handleDelete(user.id)}>Excluir</button>
-                                </div>  
+                                {editingUser === user.id ? (
+                                    <div className='edit-form'>
+                                        <input
+                                            type="text"
+                                            placeholder="Nome completo"
+                                            value={editForm.nome_completo}
+                                            onChange={(e) => setEditForm({...editForm, nome_completo: e.target.value})}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Telefone"
+                                            value={editForm.telefone}
+                                            onChange={(e) => setEditForm({...editForm, telefone: e.target.value})}
+                                        />
+                                        <select
+                                            value={editForm.tipo_sanguineo}
+                                            onChange={(e) => setEditForm({...editForm, tipo_sanguineo: e.target.value})}
+                                        >
+                                            <option value="">Selecione o tipo sanguíneo</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                        </select>
+                                        <div className='botoes-acao'>
+                                            <button onClick={handleSaveEdit}>Salvar</button>
+                                            <button onClick={handleCancelEdit}>Cancelar</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <p><strong>Nome:</strong> {user.nome_completo || 'Não informado'}</p>
+                                        <p><strong>CPF:</strong> {user.cpf || 'Não informado'}</p>
+                                        <p><strong>Tipo Sanguíneo:</strong> {user.tipo_sanguineo || 'Não informado'}</p>
+                                        <p><strong>Última Doação:</strong> {user.ultima_doacao ? new Date(user.ultima_doacao).toLocaleDateString('pt-BR') : 'Ainda não doou'}</p>
+                                        <p><strong>Próxima Doação:</strong> {user.proxima_doacao ? new Date(user.proxima_doacao).toLocaleDateString('pt-BR') : 'Não tem doação agendada'}</p>
+                                        <p><strong>Contato:</strong> {user.telefone || 'Não informado'}</p>
+                                        <div className='botoes-acao'>
+                                            <button onClick={() => handleEdit(user)}>Editar</button>
+                                            <button onClick={() => handleDelete(user.id)}>Excluir</button>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         ))
                     )}

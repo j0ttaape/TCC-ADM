@@ -110,6 +110,68 @@
                     font-size: 1.2rem;
                 }
             }
+
+            .edit-form {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                input, select, textarea {
+                    padding: 0.5rem;
+                    border: 1px solid #e1e5e9;
+                    border-radius: 4px;
+                    font-size: 1rem;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #183758;
+                    }
+                }
+
+                select {
+                    background-color: #ffffff;
+                    cursor: pointer;
+                }
+
+                textarea {
+                    resize: vertical;
+                    min-height: 60px;
+                }
+
+                .botoes-acao {
+                    margin-top: 1rem;
+                    display: flex;
+                    gap: 0.5rem;
+
+                    button {
+                        padding: 0.5rem 1rem;
+                        border: none;
+                        border-radius: 5px;
+                        font-size: 1rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+
+                        &:first-child {
+                            background-color: #183758;
+                            color: #ffffff;
+
+                            &:hover {
+                                background-color: #0f2533;
+                            }
+                        }
+
+                        &:last-child {
+                            background-color: #dc3545;
+                            color: #ffffff;
+
+                            &:hover {
+                                background-color: #c82333;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
