@@ -33,9 +33,30 @@ export default function Inicio() {
                 }
             });
             alert(response.data.resposta);
-            carregarPedidos(); 
+            carregarPedidos();
         } catch (error) {
             const errorMessage = error.response?.data?.erro || error.message || 'Erro ao conceder permissão';
+            alert(errorMessage);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const negarPermissao = async (id) => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('token');
+            const response = await axios.put('http://localhost:5010/negarPermissao', {
+                id_requerido: id
+            }, {
+                headers: {
+                    'x-access-token': token
+                }
+            });
+            alert(response.data.resposta);
+            carregarPedidos();
+        } catch (error) {
+            const errorMessage = error.response?.data?.erro || error.message || 'Erro ao negar permissão';
             alert(errorMessage);
         } finally {
             setLoading(false);
@@ -57,12 +78,21 @@ export default function Inicio() {
                             <div key={pedido.id_adm} className='pedido-item'>
                                 <h3>{pedido.nome}</h3>
                                 <p>Email: {pedido.email}</p>
-                                <button
-                                    onClick={() => concederPermissao(pedido.id_adm)}
-                                    disabled={loading}
-                                >
-                                    {loading ? 'Concedendo...' : 'Conceder Permissão'}
-                                </button>
+                                <div className='buttons'>
+                                    <button
+                                        onClick={() => concederPermissao(pedido.id_adm)}
+                                        disabled={loading}
+                                    >
+                                        {loading ? 'Concedendo...' : 'Conceder Permissão'}
+                                    </button>
+                                    <button
+                                        onClick={() => negarPermissao(pedido.id_adm)}
+                                        disabled={loading}
+                                        className='negar-btn'
+                                    >
+                                        {loading ? 'Negando...' : 'Negar Permissão'}
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>

@@ -21,6 +21,12 @@ throw new Error('É necessárioo informar o id de requerimento');
 
 }
 
+export function validarNegarPermissao(id_requerido){
+if(!id_requerido)
+throw new Error('É necessário informar o id de requerimento');
+
+}
+
 export function validarLoginAdm(requisitos){
     if(!requisitos.email)
         throw new Error('É necessário nos informar o email');

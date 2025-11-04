@@ -29,6 +29,11 @@
     color: #666;
 }
 
+.buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
 .pedido-item button {
     padding: 0.5rem 1rem;
     background-color: #183758;
@@ -46,4 +51,12 @@
 .pedido-item button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+.negar-btn {
+    background-color: #dc3545;
+}
+
+.negar-btn:hover {
+    background-color: #c82333;
 }

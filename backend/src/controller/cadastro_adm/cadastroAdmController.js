@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { generateToken } from "../../utils/jwt.js";
-import { concederPermissaoService, listarPedidosService, loginADM, permissaoAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
+import { concederPermissaoService, listarPedidosService, loginADM, negarPermissaoService, permissaoAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
 import { getAuthentication } from "../../utils/jwt.js";
 
 const cad = Router();
@@ -53,6 +53,29 @@ if (!id_adm) {
 }
 
 const resposta = await concederPermissaoService(id_requerido,id_adm);
+
+resp.status(201).send({
+    resposta
+})
+}
+catch (error) {
+        global.logErro(error);
+        resp.status(401).send(global.criarErro(error));
+
+}
+
+})
+
+cad.put('/negarPermissao',Autenticador, async(req,resp) => {
+try {
+const id_requerido = req.body.id_requerido;
+const id_adm = req.user && req.user.id_adm;
+
+if (!id_adm) {
+    return resp.status(401).send({ erro: 'Token inválido ou usuário não identificado' });
+}
+
+const resposta = await negarPermissaoService(id_requerido,id_adm);
 
 resp.status(201).send({
     resposta
