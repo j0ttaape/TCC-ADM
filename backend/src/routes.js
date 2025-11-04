@@ -8,6 +8,7 @@ import age from "./controller/hemocentros/agenda/agendaDisponiveController.js";
 import estoque from "./controller/estoque/estoqueController.js";
 import gerenciarUser from "./controller/gerenciarDoadores/gerenciarUserController.js";
 import relatorioGeral from "./controller/relatorioGeral/relatorioGeralController.js";
+import voluntario from "./controller/voluntarios/voluntarioController.js";
 
 export function Rotas(api){
     api.use(hemo);
@@ -19,6 +20,7 @@ export function Rotas(api){
     api.use(estoque);
     api.use(gerenciarUser);
     api.use(relatorioGeral);
+    api.use(voluntario);
 
 
 }

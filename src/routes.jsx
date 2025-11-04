@@ -3,13 +3,13 @@ import Inicio from "./pages/inicio/index.jsx";
 import CadastrarHemo from "./pages/cadastrarHemo/index.jsx";
 import Buscarhemo from "./pages/buscarHemo/index.jsx";
 import GerenciarDoadores from "./pages/gerenciarDoadores/index.jsx";
-import Agendamementos from "./pages/agendamentos/index.jsx"
 import RelatorioGeral from "./pages/relatoriogeral/index.jsx"
 import Configuracao from "./pages/configuracao/index.jsx"
 import Login from "./pages/login/index.jsx";
 import CadastrarAdm from "./pages/cadastrarAdm/index.jsx";
 import EditarHemocentro from "./pages/editarHemocentro/index.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Voluntarios from "./pages/voluntarios/index.jsx";
 
 
 export default function Navegação(){
@@ -28,6 +28,7 @@ export default function Navegação(){
             <Route path="/RelatorioGeral" element={<ProtectedRoute><RelatorioGeral/></ProtectedRoute>}/>
             <Route path="/Configuracao" element={<ProtectedRoute><Configuracao/></ProtectedRoute>}/>
             <Route path="/EditarHemocentro" element={<ProtectedRoute><EditarHemocentro/></ProtectedRoute>}/>
+            <Route path="/Voluntarios" element={<ProtectedRoute><Voluntarios/></ProtectedRoute>}/>
 
 
 

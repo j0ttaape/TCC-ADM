@@ -10,8 +10,10 @@ export default function Header() {
   const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/');
+    if (window.confirm("Deseja realmente sair?")) {
+      localStorage.removeItem('token');
+      navigate('/');
+    }
   };
 
   return (
@@ -49,6 +51,11 @@ export default function Header() {
 
             </div>
 
+                 <div className={`botoes ${isActive('/voluntarios') ? 'active' : ''}`}>
+
+            <Link to={'/voluntarios'}>< FaCalendarCheck className="icon" /> Voluntarios</Link>
+
+            </div>
             
 
             <div className={`botoes ${isActive('/RelatorioGeral') ? 'active' : ''}`}>
