@@ -19,6 +19,7 @@ export default function EditarHemocentro() {
     const [horariosSelecionado,setHorarioSelecionado] = useState('');
     const [voluntarios, setVoluntarios] = useState([]);
     const [editingVoluntario, setEditingVoluntario] = useState(null);
+    const [originalVoluntario, setOriginalVoluntario] = useState(null);
     const [editForm, setEditForm] = useState({
         nome: '',
         email: '',
@@ -140,8 +141,7 @@ export default function EditarHemocentro() {
     }
 
     const handleDeletarVoluntario = async (id_voluntario) => {
-        if (!selectedHemocentro) return;
- o
+       if (!selectedHemocentro) return;
         try {
             setLoading(true);
             const response = await axios.delete(`http://localhost:5010/deletarVoluntario/${id_voluntario}`, {
@@ -163,6 +163,7 @@ export default function EditarHemocentro() {
 
     const startEdit = (voluntario) => {
         setEditingVoluntario(voluntario.id_voluntario);
+        setOriginalVoluntario(voluntario);
         setEditForm({
             nome: voluntario.nome_voluntario || '',
             email: voluntario.email_voluntario || '',
@@ -187,14 +188,20 @@ export default function EditarHemocentro() {
 
     const saveEdit = async () => {
         try {
-            const data = {
-                nome_voluntario: editForm.nome,
-                email_voluntario: editForm.email,
-                telefone_voluntario: editForm.telefone,
-                cpf_voluntario: editForm.cpf,
-                disponibilidade_voluntario: editForm.disponibilidade,
-                mensagem_voluntario: editForm.mensagem
-            };
+            const data = {};
+            if (editForm.nome !== originalVoluntario.nome_voluntario) data.nome = editForm.nome;
+            if (editForm.email !== originalVoluntario.email_voluntario) data.email = editForm.email;
+            if (editForm.telefone !== originalVoluntario.telefone_voluntario) data.telefone = editForm.telefone;
+            if (editForm.cpf !== originalVoluntario.cpf_voluntario) data.cpf = editForm.cpf === '' ? null : editForm.cpf;
+            if (editForm.disponibilidade !== originalVoluntario.disponibilidade_voluntario) data.disponibilidade = editForm.disponibilidade === '' ? null : editForm.disponibilidade;
+            if (editForm.mensagem !== originalVoluntario.mensagem_voluntario) data.mensagem = editForm.mensagem;
+
+            if (Object.keys(data).length === 0) {
+                alert('Nenhuma alteração foi feita.');
+                setEditingVoluntario(null);
+                return;
+            }
+
             const response = await axios.put(`http://localhost:5010/editarVoluntario/${editingVoluntario}`, data, {
                 headers: { 'x-access-token': localStorage.getItem('token') }
             });
@@ -700,7 +707,10 @@ export default function EditarHemocentro() {
                                                         <h4>{voluntario.nome_voluntario}</h4>
                                                         <p><strong>Email:</strong> {voluntario.email_voluntario}</p>
                                                         <p><strong>Telefone:</strong> {voluntario.telefone_voluntario}</p>
+                                                        <p><strong>CPF:</strong> {voluntario.cpf_voluntario}</p>
                                                         <p><strong>Tipo Sanguíneo:</strong> {voluntario.tipo_sanguineo_voluntario}</p>
+                                                        <p><strong>Disponibilidade:</strong> {voluntario.disponibilidade_voluntario}</p>
+                                                        <p><strong>Mensagem:</strong> {voluntario.mensagem_voluntario}</p>
                                                         <div className='botoes-acao'>
                                                             <button onClick={() => startEdit(voluntario)}>Editar</button>
                                                             <button

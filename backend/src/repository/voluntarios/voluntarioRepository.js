@@ -24,13 +24,47 @@ export async function pesquisarVoluntario(voluntario) {
 }
 
 export async function editarVoluntario(informacoes, id_voluntario) {
+    const campos = [];
+    const valores = [];
+
+    if (informacoes.nome !== undefined && informacoes.nome !== '') {
+        campos.push('nome = ?');
+        valores.push(informacoes.nome);
+    }
+    if (informacoes.email !== undefined && informacoes.email !== '') {
+        campos.push('email = ?');
+        valores.push(informacoes.email);
+    }
+    if (informacoes.telefone !== undefined && informacoes.telefone !== '') {
+        campos.push('telefone = ?');
+        valores.push(informacoes.telefone);
+    }
+    if (informacoes.cpf !== undefined && informacoes.cpf !== null && informacoes.cpf !== '') {
+        campos.push('cpf = ?');
+        valores.push(informacoes.cpf);
+    }
+    if (informacoes.disponibilidade !== undefined && informacoes.disponibilidade !== null && informacoes.disponibilidade !== '') {
+        campos.push('disponibilidade = ?');
+        valores.push(informacoes.disponibilidade);
+    }
+    if (informacoes.mensagem !== undefined && informacoes.mensagem !== null && informacoes.mensagem !== '') {
+        campos.push('mensagem = ?');
+        valores.push(informacoes.mensagem);
+    }
+
+    if (campos.length === 0) {
+        throw new Error('Nenhum campo para atualizar');
+    }
+
     const comando = `
     UPDATE voluntarios
-    SET nome = ?, email = ?, telefone = ?, cpf = ?, disponibilidade = ?, mensagem = ?
+    SET ${campos.join(', ')}
     WHERE id = ?
-    `
+    `;
 
-    await connection.query(comando, [informacoes.nome, informacoes.email, informacoes.telefone, informacoes.cpf, informacoes.disponibilidade, informacoes.mensagem, id_voluntario]);
+    valores.push(id_voluntario);
+
+    await connection.query(comando, valores);
     return "Voluntário editado com sucesso";
 }
 
@@ -166,7 +200,7 @@ export async function listarVoluntáriosHemocentro(nome_hemo){
 
         if(id.length == 1){
         const comando2 = `
-            select v.id as id_voluntario, v.nome as nome_voluntario, v.email as email_voluntario, v.telefone as telefone_voluntario, cu.tipo_sanguineo as tipo_sanguineo_voluntario
+            select v.id as id_voluntario, v.nome as nome_voluntario, v.email as email_voluntario, v.telefone as telefone_voluntario, v.cpf as cpf_voluntario, v.disponibilidade as disponibilidade_voluntario, v.mensagem as mensagem_voluntario, cu.tipo_sanguineo as tipo_sanguineo_voluntario
             from voluntarios v
             inner join cadastro_users cu on v.usuario_id = cu.id_cadastro
             where v.id_hemocentro = ?
