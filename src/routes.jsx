@@ -9,7 +9,7 @@ import Login from "./pages/login/index.jsx";
 import CadastrarAdm from "./pages/cadastrarAdm/index.jsx";
 import EditarHemocentro from "./pages/editarHemocentro/index.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Voluntarios from "./pages/voluntarios/index.jsx";
+
 
 
 export default function Navegação(){

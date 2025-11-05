@@ -17,6 +17,7 @@ export default function EditarHemocentro() {
     const [mesSelecionado, setMesSelecionado] = useState('');
     const [dataSelecionada, setDataSelecionada] = useState('');
     const [horariosSelecionado,setHorarioSelecionado] = useState('');
+    const [voluntarios, setVoluntarios] = useState([]);
 
 
 
@@ -114,6 +115,40 @@ export default function EditarHemocentro() {
             setHorarios(resposta.data.registros || []);
         } catch (error) {
             console.error('Erro ao carregar horários:', error);
+        }
+    }
+
+    const carregarVoluntarios = async (nomeHemocentro) => {
+        try {
+            const resposta = await axios.post('http://localhost:5010/listarVoluntariosHemocentro', {
+                nome_hemocentro: nomeHemocentro
+            });
+            setVoluntarios(resposta.data.resposta || []);
+        } catch (error) {
+            console.error('Erro ao carregar voluntários:', error);
+            setVoluntarios([]);
+        }
+    }
+
+    const handleDeletarVoluntario = async (id_voluntario) => {
+        if (!selectedHemocentro) return;
+
+        try {
+            setLoading(true);
+            const response = await axios.delete(`http://localhost:5010/deletarVoluntario/${id_voluntario}`, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            });
+            if (response.data.erro) {
+                alert(response.data.erro);
+            } else {
+                alert(response.data.resposta);
+                carregarVoluntarios(selectedHemocentro.nome_hemocentro);
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data?.erro || error.message || 'Erro ao remover voluntário';
+            alert(errorMessage);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -251,6 +286,12 @@ export default function EditarHemocentro() {
         }
     }, [activeTab, selectedHemocentro]);
 
+    useEffect(() => {
+        if (activeTab === 'voluntarios' && selectedHemocentro) {
+            carregarVoluntarios(selectedHemocentro.nome_hemocentro);
+        }
+    }, [activeTab, selectedHemocentro]);
+
     return (
         <div className='container-editar-hemo'>
             <Header />
@@ -277,6 +318,12 @@ export default function EditarHemocentro() {
                                 onClick={() => setActiveTab('agenda')}
                             >
                                 Agenda
+                            </button>
+                            <button
+                                className={activeTab === 'voluntarios' ? 'active' : ''}
+                                onClick={() => setActiveTab('voluntarios')}
+                            >
+                                Voluntários
                             </button>
 
                         </div>
@@ -527,6 +574,33 @@ export default function EditarHemocentro() {
                                     )}
                                 </div>
 
+                            </div>
+                        )}
+
+                        {activeTab === 'voluntarios' && (
+                            <div className='tab-content'>
+                                <h3>Voluntários do Hemocentro</h3>
+                                <div className='voluntarios-list'>
+                                    {Array.isArray(voluntarios) && voluntarios.length > 0 ? (
+                                        voluntarios.map(voluntario => (
+                                            <div key={voluntario.id_voluntario} className='voluntario-item'>
+                                                <h4>{voluntario.nome_voluntario}</h4>
+                                                <p><strong>Email:</strong> {voluntario.email_voluntario}</p>
+                                                <p><strong>Telefone:</strong> {voluntario.telefone_voluntario}</p>
+                                                <p><strong>Tipo Sanguíneo:</strong> {voluntario.tipo_sanguineo_voluntario}</p>
+                                                <button
+                                                    onClick={() => handleDeletarVoluntario(voluntario.id_voluntario)}
+                                                    className='delete-btn'
+                                                    disabled={loading}
+                                                >
+                                                    {loading ? 'Removendo...' : 'Remover Voluntário'}
+                                                </button>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>Nenhum voluntário encontrado para este hemocentro.</p>
+                                    )}
+                                </div>
                             </div>
                         )}
 

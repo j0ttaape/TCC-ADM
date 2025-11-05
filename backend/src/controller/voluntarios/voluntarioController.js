@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { listarVoluntarios, pesquisarVoluntario, editarVoluntario, deletarVoluntario } from "../../repository/voluntarios/voluntarioRepository.js";
 import { getAuthentication } from "../../utils/jwt.js";
-import { permissaoVoluntariosService, negarVoluntariosService } from "../../service/voluntariosService/voluntariosService.js";
+import { permissaoVoluntariosService, negarVoluntariosService, listarVoluntariosHemocentroService } from "../../service/voluntariosService/voluntariosService.js";
 
 const Autenticador = getAuthentication();
 const voluntario =  Router();
@@ -39,12 +39,15 @@ voluntario.put("/editarVoluntario/:id_voluntario", async (req, resp) => {
     }
 });
 
-voluntario.delete("/deletarVoluntario/:id_voluntario", async (req, resp) => {
+voluntario.delete("/deletarVoluntario/:id_voluntario",Autenticador, async (req, resp) => {
     try {
+        const id_adm = req.user.id_adm;
+
         let id_voluntario = req.params.id_voluntario;
-        const registros = await deletarVoluntario(id_voluntario);
+
+        const resposta = await deletarVoluntario(id_adm,id_voluntario);
         resp.status(201).send({
-            registros
+            resposta
         })
     }
     catch (error) {
@@ -55,9 +58,9 @@ voluntario.delete("/deletarVoluntario/:id_voluntario", async (req, resp) => {
 voluntario.put('/permitirVoluntario', Autenticador, async(req,resp) => {
     try {
     const id_adm = req.user.id_adm;
-    const nome_voluntario = req.body.nome_voluntario;
+    const infos = req.body;
 
-    const resposta = await permissaoVoluntariosService(id_adm,nome_voluntario);
+    const resposta = await permissaoVoluntariosService(id_adm,infos);
 
     resp.status(201).send({
         resposta
@@ -71,9 +74,9 @@ voluntario.put('/permitirVoluntario', Autenticador, async(req,resp) => {
 voluntario.delete('/negarVoluntario', Autenticador, async(req,resp) => {
     try {
     const id_adm = req.user.id_adm;
-    const nome_voluntario = req.body.nome_voluntario;
+    const infos = req.body;
 
-    const resposta = await negarVoluntariosService(id_adm,nome_voluntario);
+    const resposta = await negarVoluntariosService(id_adm,infos);
 
     resp.status(201).send({
         resposta
@@ -82,6 +85,22 @@ voluntario.delete('/negarVoluntario', Autenticador, async(req,resp) => {
     catch (error) {
          resp.status(500).send({ error: error.message });
     }
-} )
+} );
+
+voluntario. post('/listarVoluntariosHemocentro', async(req,resp) => {
+try {
+const nome_hemocentro = req.body.nome_hemocentro;
+
+const resposta = await listarVoluntariosHemocentroService(nome_hemocentro);
+
+resp.status(201).send({
+    resposta
+});
+} 
+catch (error) {
+    resp.status(500).send({ error: error.message });
+}
+
+})
 
 export default voluntario;

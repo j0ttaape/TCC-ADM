@@ -2,13 +2,21 @@ import connection from "../connection.js";
 import transporter from "../email.js";
 
 export async function listarVoluntarios() {
-    const [rows] = await connection.execute('SELECT * FROM voluntarios where permissao = false');
+    const [rows] = await connection.query(`
+        SELECT v.*, h.nome_hemocentro
+        FROM voluntarios v
+        inner join hemocentros h ON v.id_hemocentro = h.id_hemocentro
+        WHERE v.permissao = false
+    `);
     return rows;
 }
 
 export async function pesquisarVoluntario(voluntario) {
-    const [rows] = await connection.execute(
-        'SELECT * FROM voluntarios WHERE (nome LIKE ? OR email LIKE ? OR telefone LIKE ? OR cpf LIKE ?) and permissao = false',
+    const [rows] = await connection.query(
+        `SELECT v.*, h.nome_hemocentro
+         FROM voluntarios v
+         inner JOIN hemocentros h ON v.id_hemocentro = h.id_hemocentro
+         WHERE (v.nome LIKE ? OR v.email LIKE ? OR v.telefone LIKE ? OR v.cpf LIKE ?) AND v.permissao = false`,
         [`%${voluntario}%`, `%${voluntario}%`, `%${voluntario}%`, `%${voluntario}%`]
     );
     return rows;
@@ -25,17 +33,30 @@ export async function editarVoluntario(informacoes, id_voluntario) {
     return "Voluntário editado com sucesso";
 }
 
-export async function deletarVoluntario(id_voluntario) {
+export async function deletarVoluntario(id_adm,id_voluntario) {
+    const comando2 = `
+    select permissao,permissao_adm from cadastro_adm
+    where id_adm = ?
+    `;
+
+    const [permissoes] = await connection.query(comando2,[id_adm]);
+
+    if(permissoes[0].permissao == true && permissoes[0].permissao_adm == true ){
+    
     const comando = `
     DELETE FROM voluntarios
     WHERE id = ?
     `
 
     await connection.query(comando, [id_voluntario]);
-    return "Voluntário deletado com sucesso";
+    return "Voluntário deletado com sucesso";}
+
+    else {
+        return 'você não tem permissão para esta ação';
+    }
 }
 
-export async function permitirVoluntario(id_adm,nome_voluntario){
+export async function permitirVoluntario(id_adm,infos){
     const comando = `select permissao, permissao_adm from cadastro_adm
     where id_adm = ?`;
 
@@ -43,7 +64,7 @@ export async function permitirVoluntario(id_adm,nome_voluntario){
 
     if(permissoes[0].permissao == true && permissoes[0].permissao_adm == true){
         // Buscar informações do voluntário antes de atualizar
-        const [informacoes] = await connection.query(`select email from voluntarios where nome = ?`,[nome_voluntario]);
+        const [informacoes] = await connection.query(`select nome,email from voluntarios where id = ?`,[infos.id_voluntario]);
 
         if (!informacoes || informacoes.length === 0) {
             throw new Error('Voluntário não encontrado');
@@ -52,14 +73,14 @@ export async function permitirVoluntario(id_adm,nome_voluntario){
         const comando2 = `
         update voluntarios
         set permissao = true
-        where nome = ?
+        where id = ?
         `
 
-        const [rows] = await connection.query(comando2,nome_voluntario);
+        const [rows] = await connection.query(comando2,[infos.id_voluntario]);
 
-        const assunto = `Parabéns, ${nome_voluntario}! Você foi aprovado(a) como voluntário(a)!`
+        const assunto = `Parabéns, ${informacoes[0].nome}! Você foi aprovado(a) como voluntário(a)!`
 
-        const texto = `Olá, ${nome_voluntario}!
+        const texto = `Olá, ${informacoes[0].nome}!
 
         Temos uma ótima notícia: seu cadastro como voluntário(a) foi aprovado! 🎉
 
@@ -85,7 +106,7 @@ await transporter.sendMail({
     }
 }
 
-export async function negarVoluntario(id_adm,nome_voluntario){
+export async function negarVoluntario(id_adm,infos){
     const comando = `select permissao, permissao_adm from cadastro_adm
     where id_adm = ?`;
 
@@ -93,7 +114,7 @@ export async function negarVoluntario(id_adm,nome_voluntario){
 
     if(permissoes[0].permissao == true && permissoes[0].permissao_adm == true){
         // Buscar informações do voluntário antes de deletar
-        const [informacoes] = await connection.query(`select email from voluntarios where nome = ?`,[nome_voluntario]);
+        const [informacoes] = await connection.query(`select nome,email from voluntarios where id = ?`,[infos.id_voluntario]);
 
         if (!informacoes || informacoes.length === 0) {
             throw new Error('Voluntário não encontrado');
@@ -101,14 +122,14 @@ export async function negarVoluntario(id_adm,nome_voluntario){
 
         const comando2 = `
         DELETE FROM voluntarios
-        WHERE nome = ?
+        WHERE id = ?
         `
 
-        const [rows] = await connection.query(comando2,nome_voluntario);
+        const [rows] = await connection.query(comando2,infos.id_voluntario);
 
         const assunto = `🙁 Atualização sobre seu pedido de voluntariado`
 
-        const texto = `Olá, ${nome_voluntario}!
+        const texto = `Olá, ${informacoes[0].nome}!
 
 Agradecemos sinceramente pelo seu interesse em fazer parte da nossa equipe de voluntariado. 💗
 
@@ -132,4 +153,30 @@ await transporter.sendMail({
     else{
         return 'Você não tem permissão para esta ação ';
     }
+}
+
+
+export async function listarVoluntáriosHemocentro(nome_hemo){
+     const comando = `
+        select id_hemocentro from hemocentros
+        where nome_hemocentro = ?
+        `
+        const [id] = await connection.query(comando,[nome_hemo]);
+
+        if(id.length == 1){
+        const comando2 = `
+            select v.id as id_voluntario, v.nome as nome_voluntario, v.email as email_voluntario, v.telefone as telefone_voluntario, cu.tipo_sanguineo as tipo_sanguineo_voluntario
+            from voluntarios v
+            inner join cadastro_users cu on v.usuario_id = cu.id_cadastro
+            where v.id_hemocentro = ?
+            and v.permissao = true
+        `;
+        const [registros] = await connection.query(comando2,[id[0].id_hemocentro]);
+
+        return registros;
+}
+
+else{
+    return 'hemocentro não encontrado';
+}
 }

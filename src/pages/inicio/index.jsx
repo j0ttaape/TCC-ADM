@@ -9,7 +9,8 @@ export default function Inicio() {
     const [loading, setLoading] = useState(false);
     const [voluntarios, setVoluntarios] = useState([]);
     const [loadingVoluntarios, setLoadingVoluntarios] = useState(true);
-    const [loadingVoluntario, setLoadingVoluntario] = useState(null);
+    const [loadingAprovacao, setLoadingAprovacao] = useState(null);
+    const [loadingNegacao, setLoadingNegacao] = useState(null);
     const [query, setQuery] = useState('');
 
     useEffect(() => {
@@ -91,11 +92,11 @@ export default function Inicio() {
         loadVoluntarios(query);
     };
 
-    const permitirVoluntario = async (nome) => {
+    const permitirVoluntario = async (id) => {
         try {
-            setLoadingVoluntario(nome);
+            setLoadingAprovacao(id);
             const token = localStorage.getItem('token');
-            const response = await api.put('/permitirVoluntario', { nome_voluntario: nome }, {
+            const response = await api.put('/permitirVoluntario', { id_voluntario: id }, {
                 headers: {
                     'x-access-token': token
                 }
@@ -106,16 +107,16 @@ export default function Inicio() {
             console.error('Erro ao permitir voluntário:', error);
             alert('Erro ao permitir voluntário. Verifique o console.');
         } finally {
-            setLoadingVoluntario(null);
+            setLoadingAprovacao(null);
         }
     };
 
-    const negarVoluntario = async (nome) => {
+    const negarVoluntario = async (id) => {
         try {
-            setLoadingVoluntario(nome);
+            setLoadingNegacao(id);
             const token = localStorage.getItem('token');
             const response = await api.delete('/negarVoluntario', {
-                data: { nome_voluntario: nome },
+                data: { id_voluntario: id },
                 headers: {
                     'x-access-token': token
                 }
@@ -126,7 +127,7 @@ export default function Inicio() {
             console.error('Erro ao negar voluntário:', error);
             alert('Erro ao negar voluntário. Verifique o console.');
         } finally {
-            setLoadingVoluntario(null);
+            setLoadingNegacao(null);
         }
     };
 
@@ -209,20 +210,21 @@ export default function Inicio() {
                                 <p><strong>Email:</strong> {voluntario.email || 'Não informado'}</p>
                                 <p><strong>Telefone:</strong> {voluntario.telefone || 'Não informado'}</p>
                                 <p><strong>CPF:</strong> {voluntario.cpf || 'Não informado'}</p>
+                                <p><strong>Hemocentro:</strong> {voluntario.nome_hemocentro || 'Não informado'}</p>
                                 <p><strong>Disponibilidade:</strong> {voluntario.disponibilidade || 'Não informado'}</p>
                                 <p><strong>Mensagem:</strong> {voluntario.mensagem || 'Não informado'}</p>
                                 <div className='botoes-acao'>
                                     <button
-                                        onClick={() => permitirVoluntario(voluntario.nome)}
-                                        disabled={loadingVoluntario === voluntario.nome}
+                                        onClick={() => permitirVoluntario(voluntario.id)}
+                                        disabled={loadingAprovacao === voluntario.id}
                                     >
-                                        {loadingVoluntario === voluntario.nome ? 'Aprovando...' : 'Aprovar'}
+                                        {loadingAprovacao === voluntario.id ? 'Aprovando...' : 'Aprovar'}
                                     </button>
                                     <button
-                                        onClick={() => negarVoluntario(voluntario.nome)}
-                                        disabled={loadingVoluntario === voluntario.nome}
+                                        onClick={() => negarVoluntario(voluntario.id)}
+                                        disabled={loadingNegacao === voluntario.id}
                                     >
-                                        {loadingVoluntario === voluntario.nome ? 'Negando...' : 'Negar'}
+                                        {loadingNegacao === voluntario.id ? 'Negando...' : 'Negar'}
                                     </button>
                                 </div>
                             </div>
