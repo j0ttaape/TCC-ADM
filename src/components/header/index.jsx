@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './index.scss'
 import "/src/index.scss"
-import { FaHome, FaPlusCircle, FaSearch, FaUsers, FaCalendarCheck, FaChartLine, FaCog, FaSignOutAlt, FaShieldAlt } from "react-icons/fa";
+import { FaHome, FaPlusCircle, FaSearch, FaUsers, FaCalendarCheck, FaChartLine, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 export default function Header() {
   const location = useLocation();
@@ -60,9 +60,9 @@ export default function Header() {
 
             </div>
             
-              <div className={`botoes ${isActive('/permissoes') ? 'active' : ''}`}>
+            <div className={`botoes ${isActive('/permissoes') ? 'active' : ''}`}>
 
-            <Link to={'/permissoes'}><FaShieldAlt className="icon" /> Permissões</Link>
+            <Link to={'/permissoes'}> Permissões</Link>
 
             </div>
 

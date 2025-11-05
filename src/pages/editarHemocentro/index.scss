@@ -361,38 +361,53 @@
                     gap: 1rem;
 
                     .voluntario-item {
-                        padding: 1rem;
+                        padding: 1.5rem;
                         border: 1px solid #ddd;
-                        border-radius: 8px;
-                        background-color: #f9f9f9;
-                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                        transition: box-shadow 0.3s ease;
+                        border-radius: 12px;
+                        background: linear-gradient(135deg, #f9f9f9 0%, #e9ecef 100%);
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        transition: all 0.3s ease;
+                        position: relative;
+                        overflow: hidden;
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 4px;
+                            background: linear-gradient(90deg, #ed1818, #c91414);
+                        }
 
                         &:hover {
-                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                            transform: translateY(-2px);
                         }
 
                         h4 {
                             margin: 0 0 0.5rem 0;
                             color: #183758;
-                            font-size: 1.2rem;
+                            font-size: 1.3rem;
+                            font-weight: bold;
                         }
 
                         p {
                             margin: 0.25rem 0;
-                            font-size: 0.9rem;
+                            font-size: 0.95rem;
                             color: #333;
                             display: flex;
                             justify-content: space-between;
 
                             strong {
                                 color: #183758;
+                                font-weight: 600;
                             }
                         }
 
                         .delete-btn {
                             margin-top: 0.5rem;
-                            padding: 0.5rem 1rem;
+                            padding: 0.6rem 1.2rem;
                             background-color: #dc3545;
                             color: white;
                             border: none;
@@ -400,15 +415,20 @@
                             font-size: 0.9rem;
                             font-weight: bold;
                             cursor: pointer;
-                            transition: background-color 0.3s ease;
+                            transition: all 0.3s ease;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 0.5rem;
 
                             &:hover {
                                 background-color: #c82333;
+                                transform: scale(1.05);
                             }
 
                             &:disabled {
                                 background-color: #ccc;
                                 cursor: not-allowed;
+                                transform: none;
                             }
                         }
                     }

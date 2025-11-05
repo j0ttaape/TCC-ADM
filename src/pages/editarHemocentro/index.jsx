@@ -18,6 +18,15 @@ export default function EditarHemocentro() {
     const [dataSelecionada, setDataSelecionada] = useState('');
     const [horariosSelecionado,setHorarioSelecionado] = useState('');
     const [voluntarios, setVoluntarios] = useState([]);
+    const [editingVoluntario, setEditingVoluntario] = useState(null);
+    const [editForm, setEditForm] = useState({
+        nome: '',
+        email: '',
+        telefone: '',
+        cpf: '',
+        disponibilidade: '',
+        mensagem: ''
+    });
 
 
 
@@ -132,7 +141,7 @@ export default function EditarHemocentro() {
 
     const handleDeletarVoluntario = async (id_voluntario) => {
         if (!selectedHemocentro) return;
-
+ o
         try {
             setLoading(true);
             const response = await axios.delete(`http://localhost:5010/deletarVoluntario/${id_voluntario}`, {
@@ -151,6 +160,60 @@ export default function EditarHemocentro() {
             setLoading(false);
         }
     }
+
+    const startEdit = (voluntario) => {
+        setEditingVoluntario(voluntario.id_voluntario);
+        setEditForm({
+            nome: voluntario.nome_voluntario || '',
+            email: voluntario.email_voluntario || '',
+            telefone: voluntario.telefone_voluntario || '',
+            cpf: voluntario.cpf_voluntario || '',
+            disponibilidade: voluntario.disponibilidade_voluntario || '',
+            mensagem: voluntario.mensagem_voluntario || ''
+        });
+    };
+
+    const cancelEdit = () => {
+        setEditingVoluntario(null);
+        setEditForm({
+            nome: '',
+            email: '',
+            telefone: '',
+            cpf: '',
+            disponibilidade: '',
+            mensagem: ''
+        });
+    };
+
+    const saveEdit = async () => {
+        try {
+            const data = {
+                nome_voluntario: editForm.nome,
+                email_voluntario: editForm.email,
+                telefone_voluntario: editForm.telefone,
+                cpf_voluntario: editForm.cpf,
+                disponibilidade_voluntario: editForm.disponibilidade,
+                mensagem_voluntario: editForm.mensagem
+            };
+            const response = await axios.put(`http://localhost:5010/editarVoluntario/${editingVoluntario}`, data, {
+                headers: { 'x-access-token': localStorage.getItem('token') }
+            });
+            alert('Voluntário editado com sucesso!');
+            setEditingVoluntario(null);
+            carregarVoluntarios(selectedHemocentro.nome_hemocentro);
+        } catch (error) {
+            console.error('Erro ao editar voluntário:', error);
+            alert('Erro ao editar voluntário. Verifique o console.');
+        }
+    };
+
+    const handleEditChange = (e) => {
+        const { name, value } = e.target;
+        setEditForm(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
 
 
@@ -584,17 +647,72 @@ export default function EditarHemocentro() {
                                     {Array.isArray(voluntarios) && voluntarios.length > 0 ? (
                                         voluntarios.map(voluntario => (
                                             <div key={voluntario.id_voluntario} className='voluntario-item'>
-                                                <h4>{voluntario.nome_voluntario}</h4>
-                                                <p><strong>Email:</strong> {voluntario.email_voluntario}</p>
-                                                <p><strong>Telefone:</strong> {voluntario.telefone_voluntario}</p>
-                                                <p><strong>Tipo Sanguíneo:</strong> {voluntario.tipo_sanguineo_voluntario}</p>
-                                                <button
-                                                    onClick={() => handleDeletarVoluntario(voluntario.id_voluntario)}
-                                                    className='delete-btn'
-                                                    disabled={loading}
-                                                >
-                                                    {loading ? 'Removendo...' : 'Remover Voluntário'}
-                                                </button>
+                                                {editingVoluntario === voluntario.id_voluntario ? (
+                                                    <div className='edit-form'>
+                                                        <input
+                                                            type="text"
+                                                            name="nome"
+                                                            value={editForm.nome}
+                                                            onChange={handleEditChange}
+                                                            placeholder="Nome"
+                                                        />
+                                                        <input
+                                                            type="email"
+                                                            name="email"
+                                                            value={editForm.email}
+                                                            onChange={handleEditChange}
+                                                            placeholder="Email"
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            name="telefone"
+                                                            value={editForm.telefone}
+                                                            onChange={handleEditChange}
+                                                            placeholder="Telefone"
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            name="cpf"
+                                                            value={editForm.cpf}
+                                                            onChange={handleEditChange}
+                                                            placeholder="CPF"
+                                                        />
+                                                        <input
+                                                            type="text"
+                                                            name="disponibilidade"
+                                                            value={editForm.disponibilidade}
+                                                            onChange={handleEditChange}
+                                                            placeholder="Disponibilidade"
+                                                        />
+                                                        <textarea
+                                                            name="mensagem"
+                                                            value={editForm.mensagem}
+                                                            onChange={handleEditChange}
+                                                            placeholder="Mensagem"
+                                                        />
+                                                        <div className='botoes-acao'>
+                                                            <button onClick={saveEdit}>Salvar</button>
+                                                            <button onClick={cancelEdit}>Cancelar</button>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        <h4>{voluntario.nome_voluntario}</h4>
+                                                        <p><strong>Email:</strong> {voluntario.email_voluntario}</p>
+                                                        <p><strong>Telefone:</strong> {voluntario.telefone_voluntario}</p>
+                                                        <p><strong>Tipo Sanguíneo:</strong> {voluntario.tipo_sanguineo_voluntario}</p>
+                                                        <div className='botoes-acao'>
+                                                            <button onClick={() => startEdit(voluntario)}>Editar</button>
+                                                            <button
+                                                                onClick={() => handleDeletarVoluntario(voluntario.id_voluntario)}
+                                                                className='delete-btn'
+                                                                disabled={loading}
+                                                            >
+                                                                {loading ? 'Removendo...' : 'Remover Voluntário'}
+                                                            </button>
+                                                        </div>
+                                                    </>
+                                                )}
                                             </div>
                                         ))
                                     ) : (
