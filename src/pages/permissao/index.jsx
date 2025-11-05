@@ -4,9 +4,11 @@ import './index.scss';
 import axios from 'axios';
 import api from '../../app.js';
 
-export default function Inicio() {
+export default function Permissoes() {
     const [pedidos, setPedidos] = useState([]);
+    const [pedidosAdm, setPedidosAdm] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [loadingAdm, setLoadingAdm] = useState(false);
     const [voluntarios, setVoluntarios] = useState([]);
     const [loadingVoluntarios, setLoadingVoluntarios] = useState(true);
     const [loadingAprovacao, setLoadingAprovacao] = useState(null);
@@ -15,6 +17,7 @@ export default function Inicio() {
 
     useEffect(() => {
         carregarPedidos();
+        carregarPedidosAdm();
         loadVoluntarios();
     }, []);
 
@@ -25,6 +28,16 @@ export default function Inicio() {
         } catch (error) {
             console.error('Erro ao carregar pedidos:', error);
             setPedidos([]);
+        }
+    };
+
+    const carregarPedidosAdm = async () => {
+        try {
+            const response = await axios.get('http://localhost:5010/listarPedidosAdm');
+            setPedidosAdm(response.data.registros || []);
+        } catch (error) {
+            console.error('Erro ao carregar pedidos de administrador:', error);
+            setPedidosAdm([]);
         }
     };
 
@@ -87,6 +100,29 @@ export default function Inicio() {
         }
     };
 
+    const concederPermissaoAdm = async (id) => {
+        try {
+            setLoadingAdm(true);
+            const token = localStorage.getItem('token');
+            const response = await axios.put('http://localhost:5010/concederPermissaoAdm', {
+                id_requerido: id
+            }, {
+                headers: {
+                    'x-access-token': token
+                }
+            });
+            alert(response.data.resposta);
+            carregarPedidosAdm();
+        } catch (error) {
+            const errorMessage = error.response?.data?.erro || error.message || 'Erro ao conceder permissão de administrador';
+            alert(errorMessage);
+        } finally {
+            setLoadingAdm(false);
+        }
+    };
+
+
+
     const handleSearch = (e) => {
         e.preventDefault();
         loadVoluntarios(query);
@@ -134,6 +170,33 @@ export default function Inicio() {
     return (
         <div>
             <Header />
+
+            <section className='container-main'>
+                <section className='container-header'>
+                    <h1>Pedidos para ser Administrador</h1>
+                </section>
+
+                {pedidosAdm.length === 0 ? (
+                    <p>Nenhum pedido pendente.</p>
+                ) : (
+                    <div className='pedidos-list'>
+                        {pedidosAdm.map(pedido => (
+                            <div key={pedido.id_adm} className='pedido-item'>
+                                <h3>{pedido.nome}</h3>
+                                <p>Email: {pedido.email}</p>
+                                <div className='buttons'>
+                                    <button
+                                        onClick={() => concederPermissaoAdm(pedido.id_adm)}
+                                        disabled={loadingAdm}
+                                    >
+                                        {loadingAdm ? 'Concedendo...' : 'Conceder Permissão'}
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </section>
 
             <section className='container-main'>
                 <section className='container-header'>

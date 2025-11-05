@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { generateToken } from "../../utils/jwt.js";
-import { concederPermissaoService, listarPedidosService, loginADM, negarPermissaoService, permissaoAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
+import { concederPermissaoService, listarPedidosService, loginADM, negarPermissaoService, permissaoAdmService, concederPermissaoAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
 import { getAuthentication } from "../../utils/jwt.js";
+import { listarPedidosAdm } from "../../repository/cadastro_adm/cadastroAdmRepository.js";
 
 const cad = Router();
 const Autenticador = getAuthentication();
@@ -104,6 +105,43 @@ const requisitos = req.body;
 catch (error) {
     global.logErro(error);
     resp.status(401).send(global.criarErro(error));
+
+}
+
+})
+
+cad.get('/listarPedidosAdm', async(req,resp) => {
+    try {
+    const registros = await listarPedidosAdm();
+
+    resp.status(201).send({
+        registros
+    })
+    }
+    catch (error) {
+       global.logErro(error);
+    resp.status(401).send(global.criarErro(error));
+    }
+})
+
+cad.put('/concederPermissaoAdm',Autenticador, async(req,resp) => {
+try {
+const id_requerido = req.body.id_requerido;
+const id_adm = req.user && req.user.id_adm;
+
+if (!id_adm) {
+    return resp.status(401).send({ erro: 'Token inválido ou usuário não identificado' });
+}
+
+const resposta = await concederPermissaoAdmService(id_requerido,id_adm);
+
+resp.status(201).send({
+    resposta
+})
+}
+catch (error) {
+        global.logErro(error);
+        resp.status(401).send(global.criarErro(error));
 
 }
 

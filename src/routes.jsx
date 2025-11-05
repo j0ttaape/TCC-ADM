@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Inicio from "./pages/inicio/index.jsx";
+import Permissoes from "./pages/permissao/index.jsx";
 import CadastrarHemo from "./pages/cadastrarHemo/index.jsx";
 import Buscarhemo from "./pages/buscarHemo/index.jsx";
 import GerenciarDoadores from "./pages/gerenciarDoadores/index.jsx";
@@ -21,7 +21,7 @@ export default function Navegação(){
             <Route path="/" element={<Login/>}/>
             <Route path="/Login" element={<Login/>}/>
             <Route path="/CadastrarAdm" element={<CadastrarAdm/>}/>
-            <Route path="/inicio" element={<ProtectedRoute><Inicio/></ProtectedRoute>}/>
+            <Route path="/permissoes" element={<ProtectedRoute><Permissoes/></ProtectedRoute>}/>
             <Route path="/CadastrarHemo" element={<ProtectedRoute><CadastrarHemo/></ProtectedRoute>}/>
             <Route path="/Buscarhemo" element={<ProtectedRoute><Buscarhemo/></ProtectedRoute>}/>
             <Route path="/GerenciarDoadores" element={<ProtectedRoute><GerenciarDoadores/></ProtectedRoute>}/>

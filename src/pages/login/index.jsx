@@ -25,7 +25,7 @@ export default function Login() {
             });
             localStorage.setItem('token', response.data.token);
             alert('Login realizado com sucesso!');
-            navigate('/inicio');
+            navigate('/CadastrarHemo');
         } catch (error) {
             const errorMessage = error.response?.data?.erro || error.message || 'Erro ao fazer login';
             alert(errorMessage);

@@ -14,6 +14,7 @@ export async function buscarHemocentros(nome){
 export async function listarHemocentros(){
     const comando = `
     select * from hemocentros
+    order by nome_hemocentro asc
     `
 
     const [registros] = await connection.query(comando);

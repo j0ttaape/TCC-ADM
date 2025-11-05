@@ -7,6 +7,7 @@ export async function listarVoluntarios() {
         FROM voluntarios v
         inner join hemocentros h ON v.id_hemocentro = h.id_hemocentro
         WHERE v.permissao = false
+        order by v.nome
     `);
     return rows;
 }

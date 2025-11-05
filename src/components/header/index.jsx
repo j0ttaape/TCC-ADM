@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './index.scss'
 import "/src/index.scss"
-import { FaHome, FaPlusCircle, FaSearch, FaUsers, FaCalendarCheck, FaChartLine, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaPlusCircle, FaSearch, FaUsers, FaCalendarCheck, FaChartLine, FaCog, FaSignOutAlt, FaShieldAlt } from "react-icons/fa";
 
 export default function Header() {
   const location = useLocation();
@@ -25,12 +25,6 @@ export default function Header() {
 
             <img src="/assets/image/logoTcc.webp" alt="" height={'70px'} />
             <p>Doe vida</p>
-            </div>
-
-            <div className={`botoes ${isActive('/inicio') ? 'active' : ''}`}>
-
-            <Link to={'/inicio'}><FaHome className="icon" />  Inicio</Link>
-
             </div>
 
             <div className={`botoes ${isActive('/CadastrarHemo') ? 'active' : ''}`}>
@@ -63,6 +57,12 @@ export default function Header() {
             <div className={`botoes ${isActive('/Configuracao') ? 'active' : ''}`}>
 
             <Link to={'/Configuracao'}><FaCog className="icon" /> Configurações</Link>
+
+            </div>
+            
+              <div className={`botoes ${isActive('/permissoes') ? 'active' : ''}`}>
+
+            <Link to={'/permissoes'}><FaShieldAlt className="icon" /> Permissões</Link>
 
             </div>
 
