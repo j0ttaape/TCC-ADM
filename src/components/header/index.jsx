@@ -51,11 +51,7 @@ export default function Header() {
 
             </div>
 
-                 <div className={`botoes ${isActive('/voluntarios') ? 'active' : ''}`}>
-
-            <Link to={'/voluntarios'}>< FaCalendarCheck className="icon" /> Voluntarios</Link>
-
-            </div>
+              
             
 
             <div className={`botoes ${isActive('/RelatorioGeral') ? 'active' : ''}`}>

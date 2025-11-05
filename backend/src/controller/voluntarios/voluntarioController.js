@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { listarVoluntarios, pesquisarVoluntario, editarVoluntario, deletarVoluntario } from "../../repository/voluntarios/voluntarioRepository.js";
+import { getAuthentication } from "../../utils/jwt.js";
+import { permissaoVoluntariosService, negarVoluntariosService } from "../../service/voluntariosService/voluntariosService.js";
 
+const Autenticador = getAuthentication();
 const voluntario =  Router();
 
 voluntario.get("/listarVoluntarios", async (req, resp) => {
@@ -48,5 +51,37 @@ voluntario.delete("/deletarVoluntario/:id_voluntario", async (req, resp) => {
         resp.status(500).send({ error: error.message });
     }
 });
+
+voluntario.put('/permitirVoluntario', Autenticador, async(req,resp) => {
+    try {
+    const id_adm = req.user.id_adm;
+    const nome_voluntario = req.body.nome_voluntario;
+
+    const resposta = await permissaoVoluntariosService(id_adm,nome_voluntario);
+
+    resp.status(201).send({
+        resposta
+    })
+    }
+    catch (error) {
+         resp.status(500).send({ error: error.message });
+    }
+} )
+
+voluntario.delete('/negarVoluntario', Autenticador, async(req,resp) => {
+    try {
+    const id_adm = req.user.id_adm;
+    const nome_voluntario = req.body.nome_voluntario;
+
+    const resposta = await negarVoluntariosService(id_adm,nome_voluntario);
+
+    resp.status(201).send({
+        resposta
+    })
+    }
+    catch (error) {
+         resp.status(500).send({ error: error.message });
+    }
+} )
 
 export default voluntario;

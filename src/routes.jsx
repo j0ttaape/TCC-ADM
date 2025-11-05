@@ -28,8 +28,7 @@ export default function Navegação(){
             <Route path="/RelatorioGeral" element={<ProtectedRoute><RelatorioGeral/></ProtectedRoute>}/>
             <Route path="/Configuracao" element={<ProtectedRoute><Configuracao/></ProtectedRoute>}/>
             <Route path="/EditarHemocentro" element={<ProtectedRoute><EditarHemocentro/></ProtectedRoute>}/>
-            <Route path="/Voluntarios" element={<ProtectedRoute><Voluntarios/></ProtectedRoute>}/>
-
+          
 
 
         </Routes>

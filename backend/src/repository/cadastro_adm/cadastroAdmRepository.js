@@ -3,9 +3,9 @@ import transporter from "../email.js";
 
 export async function permissaoAdm(informacoes){
 const comando = `
-insert into cadastro_adm(nome,email, senha, permissao)
+insert into cadastro_adm(nome,email, senha, permissao,permissão_adm )
 values
-(?,?,MD5(?),false)
+(?,?,MD5(?),false,false);
 `
 const [info] = await connection.query(comando,[informacoes.nome,informacoes.email,informacoes.senha]);
 
