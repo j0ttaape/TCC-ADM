@@ -16,14 +16,13 @@ CREATE TABLE cadastro_users (
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-
 create table cadastro_adm (
 	id_adm int auto_increment primary key,
     nome varchar (200),
 	email varchar (100),
 	senha varchar (50),
-    permissao boolean
+    permissao boolean,
+    permissao_adm boolean
 );
 
 create table hemocentros (
@@ -109,4 +108,6 @@ foreign key (usuario_id) references cadastro_users (id_cadastro) on delete casca
 create view geralQuantidadeLitros as
 select distinct tipo_sanguineo, sum(quantidade_bolsas) As quantidade_Tipo from estoque
 group by tipo_sanguineo;
+
+
 
