@@ -53,12 +53,6 @@ export default function Header() {
             <Link to={'/RelatorioGeral'}><FaChartLine className="icon" /> Relatórios Geral</Link>
 
             </div>
-
-            <div className={`botoes ${isActive('/Configuracao') ? 'active' : ''}`}>
-
-            <Link to={'/Configuracao'}><FaCog className="icon" /> Configurações</Link>
-
-            </div>
             
             <div className={`botoes ${isActive('/permissoes') ? 'active' : ''}`}>
 

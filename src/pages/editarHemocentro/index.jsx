@@ -353,6 +353,14 @@ export default function EditarHemocentro() {
     useEffect(() => {
         if (activeTab === 'estoque' && selectedHemocentro) {
             carregarEstoque(selectedHemocentro.nome_hemocentro);
+            // Consumir a API de mandarEmail
+            axios.post('http://localhost:5010/mandarEmail')
+                .then(response => {
+                    console.log('Email enviado:', response.data);
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar email:', error);
+                });
         }
     }, [activeTab, selectedHemocentro]);
 
