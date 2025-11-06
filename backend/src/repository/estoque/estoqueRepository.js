@@ -44,6 +44,7 @@ export async function adicionarNoEstoque(infos, id_adm) {
 
 }
 
+
 export async function retirarDoEstoque(infos, id_adm) {
     const comando2 = `
     select id_hemocentro from hemocentros
@@ -137,6 +138,7 @@ export async function mandarEmailNecessitado() {
                 if (!hemocentro[0]) continue;
 
                 for (let doador of doadores) {
+
                     if (
                         hemocentro[0].cidade_hemocentro &&
                         doador.cidade &&
@@ -245,9 +247,10 @@ export async function mandarEmailNecessitado() {
                             }
                         }
                     }
-                }
+                
             }
-        }
+          }
+     }
 
         return 'ok';
     } catch (error) {
