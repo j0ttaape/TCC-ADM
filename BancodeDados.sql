@@ -1,7 +1,6 @@
 create database tcc;
 use tcc;
 
-
 CREATE TABLE cadastro_users (
     id_cadastro INT AUTO_INCREMENT PRIMARY KEY,     
     nome_completo VARCHAR(150) NOT NULL,
@@ -9,7 +8,8 @@ CREATE TABLE cadastro_users (
     senha VARCHAR(255) NOT NULL,                
     cpf CHAR(11) NOT NULL UNIQUE,             
     telefone VARCHAR(15),
-    estado CHAR(2),  
+    estado CHAR(2),
+    cidade varchar(150),
 	tipo_sanguineo ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-','Não Sei'),
     sexo ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
     origem VARCHAR(100),                      
@@ -101,6 +101,15 @@ usuario_id int,
 
 foreign key (id_hemocentro) references hemocentros (id_hemocentro) on delete cascade ,
 foreign key (usuario_id) references cadastro_users (id_cadastro) on delete cascade
+);
+
+
+create table email_Estoque(
+id_email int primary key auto_increment,
+id_doador int,
+dia timestamp default current_timestamp,
+
+foreign key (id_doador) references cadastro_users (id_cadastro)
 );
 
 

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { inserirEstoqueService, retirarEstoqueService, listarEstoqueService } from "../../service/estoque/serviceEstoque.js";
+import { mandarEmailNecessitado } from "../../repository/estoque/estoqueRepository.js";
 
 const estoque = Router();
 
@@ -54,5 +55,15 @@ catch (error) {
 }
 
 })
+
+estoque.post('/mandarEmail', async (req,resp) => {
+const resposta = await mandarEmailNecessitado();
+
+resp.status(201).send({
+    resposta
+});
+
+
+}) 
 
 export default estoque;
