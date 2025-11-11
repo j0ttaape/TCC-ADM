@@ -1,12 +1,13 @@
 create database tcc;
 use tcc;
 
+
 CREATE TABLE cadastro_users (
     id_cadastro INT AUTO_INCREMENT PRIMARY KEY,     
     nome_completo VARCHAR(150) NOT NULL,
     email VARCHAR(120) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,                
-    cpf CHAR(11) NOT NULL UNIQUE,             
+    cpf CHAR(14) NOT NULL UNIQUE,             
     telefone VARCHAR(15),
     estado CHAR(2),
     cidade varchar(150),
@@ -39,9 +40,10 @@ data_disponivel date,
 horario_disponivel time,
 id_hemocentro int,
 
-foreign key (id_hemocentro) references hemocentros (id_hemocentro)
+foreign key (id_hemocentro) references hemocentros (id_hemocentro) on delete cascade
 
 );
+
 
 CREATE TABLE agendamentos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -51,7 +53,7 @@ CREATE TABLE agendamentos (
     email VARCHAR(100) NOT NULL,
     telefone VARCHAR(20),
     estado VARCHAR(50),
-    cpf char (11),
+    cpf char (14),
     cidade VARCHAR(100),
     tipo_sanguineo ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-','Não sei'),
     data_agendamento DATE,
@@ -65,6 +67,7 @@ CREATE TABLE agendamentos (
 );
 
 select * from agendamentos;
+
 create table agenda_user (
 	id_agenda int auto_increment primary key,
     data_disponivel date,
@@ -82,8 +85,9 @@ quantidade_bolsas decimal (10,2),
 quantidade_maxima decimal (10,2),
 id_hemocentro int,
 
-foreign key (id_hemocentro) references hemocentros (id_hemocentro)
+foreign key (id_hemocentro) references hemocentros (id_hemocentro) on delete cascade 
 );
+
 
 
 
@@ -91,7 +95,7 @@ create table voluntarios(
 id int primary key auto_increment,
 nome varchar (200),
 email varchar (200),
-cpf char (11),
+cpf char (14),
 telefone char (11),
 disponibilidade varchar (1000),
 mensagem varchar (1000),
@@ -109,10 +113,8 @@ id_email int primary key auto_increment,
 id_doador int,
 dia timestamp default current_timestamp,
 
-foreign key (id_doador) references cadastro_users (id_cadastro)
+foreign key (id_doador) references cadastro_users (id_cadastro) on delete cascade
 );
-
-
 
 create view geralQuantidadeLitros as
 select distinct tipo_sanguineo, sum(quantidade_bolsas) As quantidade_Tipo from estoque
