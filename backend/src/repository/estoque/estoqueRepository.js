@@ -68,6 +68,10 @@ export async function retirarDoEstoque(infos, id_adm) {
             if (novaQuantidade < 0 || novaMaxima < 0) {
                 return 'A quantidade a retirar não pode deixar o estoque negativo';
             }
+            if (novaMaxima < estoqueAtual[0].quantidade_bolsas) {
+                throw new Error('Quantidade máxima não pode ser menor que a quantidade do estoque');
+            }
+
         } else {
             return 'Estoque não encontrado para este tipo sanguíneo';
         }
@@ -247,10 +251,10 @@ export async function mandarEmailNecessitado() {
                             }
                         }
                     }
-                
+
+                }
             }
-          }
-     }
+        }
 
         return 'ok';
     } catch (error) {
@@ -258,4 +262,3 @@ export async function mandarEmailNecessitado() {
         throw error; // Re-throw para que o erro seja propagado
     }
 }
-  
