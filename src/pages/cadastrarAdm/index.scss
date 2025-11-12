@@ -14,6 +14,8 @@
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 400px;
 
         h2 {
             font-size: 2.5rem;
@@ -70,4 +72,42 @@
         }
     }
 
+}
+
+@media (max-width: 768px) {
+    .container-cadastrar-adm {
+        padding: 1rem;
+
+        .cadastrar-adm {
+            padding: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        form {
+            input {
+                height: 2.5rem;
+                font-size: 0.9rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container-cadastrar-adm {
+        .cadastrar-adm {
+            padding: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+        }
+    }
 }

@@ -1,11 +1,13 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import './index.scss'
 import "/src/index.scss"
-import { FaHome, FaPlusCircle, FaSearch, FaUsers, FaCalendarCheck, FaChartLine, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaPlusCircle, FaSearch, FaUsers, FaCalendarCheck, FaChartLine, FaCog, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   const isActive = (path) => location.pathname === path;
 
@@ -16,8 +18,14 @@ export default function Header() {
     }
   };
 
+  const toggleMenu = () => setIsOpen(!isOpen);
+
   return (
-    <div className="header-container">
+    <>
+      <div className="hamburger" onClick={toggleMenu}>
+        {isOpen ? <FaTimes /> : <FaBars />}
+      </div>
+      <div className={`header-container ${isOpen ? 'open' : ''}`}>
 
         <section className='container-sessoes'>
 
@@ -27,19 +35,19 @@ export default function Header() {
             <p>Doe vida</p>
             </div>
 
-            <div className={`botoes ${isActive('/CadastrarHemo') ? 'active' : ''}`}>
+            <div className={`botoes ${isActive('/CadastrarHemo') ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
 
             <Link to={'/CadastrarHemo'}><FaPlusCircle className="icon" /> Cadastrar Hemocentro</Link>
 
             </div>
 
-            <div className={`botoes ${isActive('/Buscarhemo') ? 'active' : ''}`}>
+            <div className={`botoes ${isActive('/Buscarhemo') ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
 
             <Link to={'/Buscarhemo'}><FaSearch className="icon" /> Buscar Hemocentro</Link>
 
             </div>
 
-            <div className={`botoes ${isActive('/GerenciarDoadores') ? 'active' : ''}`}>
+            <div className={`botoes ${isActive('/GerenciarDoadores') ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
 
             <Link to={'/GerenciarDoadores'}><FaUsers className="icon" /> Gerenciar Doadores</Link>
 
@@ -47,20 +55,19 @@ export default function Header() {
 
               
             
-
-            <div className={`botoes ${isActive('/RelatorioGeral') ? 'active' : ''}`}>
+            <div className={`botoes ${isActive('/RelatorioGeral') ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
 
             <Link to={'/RelatorioGeral'}><FaChartLine className="icon" /> Relatórios Geral</Link>
 
             </div>
             
-            <div className={`botoes ${isActive('/permissoes') ? 'active' : ''}`}>
+            <div className={`botoes ${isActive('/permissoes') ? 'active' : ''}`} onClick={() => setIsOpen(false)}>
 
             <Link to={'/permissoes'}> Permissões</Link>
 
             </div>
 
-            <div className="botoes logout" onClick={handleLogout}>
+            <div className="botoes logout" onClick={() => { handleLogout(); setIsOpen(false); }}>
 
             <FaSignOutAlt className="icon" /> Sair
 
@@ -68,7 +75,6 @@ export default function Header() {
 
          </section>
     </div>
-
-
+    </>
   )
 }

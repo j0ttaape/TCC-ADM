@@ -63,13 +63,31 @@
         margin: 16px;
         padding: 14px;
         max-width: none;
+        height: auto;
 
-        .chart-header h3 {
-            font-size: 0.95rem;
+        .chart-header {
+            h3 {
+                font-size: 1rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
         }
     }
 
     .line-chart {
         height: 300px !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .line-chart-container {
+        max-width: 800px;
+        height: 350px;
+
+        .line-chart {
+            height: 320px !important;
+        }
     }
 }

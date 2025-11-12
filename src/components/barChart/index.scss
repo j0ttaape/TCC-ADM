@@ -67,13 +67,31 @@
         margin: 16px;
         padding: 20px;
         max-width: none;
+        height: auto;
 
-        h2 {
-            font-size: 1.25rem;
+        .chart-header {
+            h3 {
+                font-size: 1.1rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
         }
     }
 
     .bar-chart {
         height: 300px !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .bar-chart-container {
+        max-width: 600px;
+        height: 350px;
+
+        .bar-chart {
+            height: 350px !important;
+        }
     }
 }

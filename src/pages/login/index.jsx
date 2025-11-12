@@ -57,7 +57,7 @@ export default function Login() {
                         {loading ? 'Entrando...' : 'Entrar'}
                     </button>
                 </form>
-                <Link to={'/cadastrarAdm'}>Não tem conta? Cadastre-se</Link>
+                <Link to={'/cadastrarAdm'}>Não tem conta? Peça permissão!</Link>
             </div>
         </div>
     )
