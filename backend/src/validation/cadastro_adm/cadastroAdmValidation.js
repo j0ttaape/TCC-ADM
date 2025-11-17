@@ -36,7 +36,7 @@ export function validarLoginAdm(requisitos){
 
 export function validarlogarAdm(registros){
 if(registros.length == 0 )
-    throw new Error('Administrador não cadastrado');
+    throw new Error('Email ou senha inválidos');
 if(registros[0].permissao == false)
     throw new Error('Você não tem permissão para logar');
 

@@ -15,7 +15,7 @@ export default async function validarCadastroHemocentro(info){
     if(!info.rua_hemocentro)
         throw new Error('informe a rua do hemocentro');
 
-    // Verificar se o nome do hemocentro já existe
+    
     const comando = `
     select count(*) as count from hemocentros
     where nome_hemocentro = ?

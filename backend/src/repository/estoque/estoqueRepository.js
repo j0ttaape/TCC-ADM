@@ -9,7 +9,7 @@ export async function adicionarNoEstoque(infos, id_adm) {
     const [id] = await connection.query(comando2, [infos.nome_hemo]);
 
     if (id.length == 1) {
-        // Verificar se a adição não excede a quantidade máxima
+     
         const comandoVerificar = `
         select quantidade_bolsas, quantidade_maxima from estoque
         where id_hemocentro = ?
@@ -68,7 +68,7 @@ export async function retirarDoEstoque(infos, id_adm) {
             if (novaQuantidade < 0 || novaMaxima < 0) {
                 return 'A quantidade a retirar não pode deixar o estoque negativo';
             }
-            if (novaMaxima < estoqueAtual[0].quantidade_bolsas) {
+            if (novaMaxima < novaQuantidade) {
                 throw new Error('Quantidade máxima não pode ser menor que a quantidade do estoque');
             }
 
