@@ -197,6 +197,7 @@
     @media (max-width: 768px) {
         margin-left: 0;
         padding: 1rem;
+        margin-top: 4rem; /* Espaço para o hamburger */
 
         .container-buscar {
             padding: 1.5rem;
@@ -216,6 +217,39 @@
 
         .container-grupos-users {
             grid-template-columns: 1fr;
+
+            .grupo {
+                padding: 1rem;
+
+                p {
+                    font-size: 0.9rem;
+
+                    &:first-child {
+                        font-size: 1rem;
+                    }
+                }
+
+                button {
+                    font-size: 0.9rem;
+                    padding: 0.4rem 0.8rem;
+                }
+
+                .botoes-acao {
+                    button {
+                        font-size: 0.9rem;
+                        padding: 0.4rem 0.8rem;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+        margin-left: 19rem;
+        padding: 1.5rem;
+
+        .container-grupos-users {
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         }
     }
 }

@@ -34,7 +34,7 @@ export default function CadastrarHemo() {
         <div className='container-cadastrar-hemo'>
             <Header />
             <section className='container-hemos'>
-                <h2>esse é o cadastrar hemocentro</h2>
+                <h2>Cadastrar Hemocentro</h2>
 
                 <div className='grupos'>
 

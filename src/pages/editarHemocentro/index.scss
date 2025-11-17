@@ -468,5 +468,114 @@
     .container-editar-hemo .container-main {
         margin-left: 0;
         padding: 1rem;
+        margin-top: 4rem; /* Espaço para o hamburger */
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        .selecao-hemo {
+            label {
+                font-size: 1rem;
+            }
+
+            select {
+                height: 2.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .conteudo {
+            .tabs {
+                flex-direction: column;
+                gap: 0.5rem;
+
+                button {
+                    font-size: 0.9rem;
+                    padding: 0.4rem 0.8rem;
+                }
+            }
+
+            .tab-content {
+                padding: 1rem;
+
+                h3 {
+                    font-size: 1.5rem;
+                }
+
+                .grupo {
+                    label {
+                        font-size: 0.9rem;
+                    }
+
+                    input {
+                        height: 2rem;
+                        font-size: 0.9rem;
+                    }
+                }
+
+                button {
+                    font-size: 0.9rem;
+                    padding: 0.6rem 1.2rem;
+                }
+
+                .estoque-list {
+                    .estoque-item {
+                        padding: 0.8rem;
+
+                        h4 {
+                            font-size: 1.1rem;
+                        }
+
+                        p {
+                            font-size: 0.8rem;
+                        }
+
+                        .acoes {
+                            input {
+                                width: 60px;
+                                height: 1.8rem;
+                                font-size: 0.7rem;
+                            }
+
+                            button {
+                                font-size: 0.7rem;
+                                padding: 0.2rem 0.4rem;
+                            }
+                        }
+                    }
+                }
+
+                .voluntarios-list {
+                    .voluntario-item {
+                        padding: 1rem;
+
+                        h4 {
+                            font-size: 1.1rem;
+                        }
+
+                        p {
+                            font-size: 0.9rem;
+                        }
+
+                        .delete-btn {
+                            font-size: 0.8rem;
+                            padding: 0.5rem 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container-editar-hemo .container-main {
+        margin-left: 20rem;
+        padding: 1.5rem;
+
+        .conteudo {
+            max-width: 900px;
+        }
     }
 }

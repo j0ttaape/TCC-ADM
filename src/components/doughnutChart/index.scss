@@ -78,7 +78,7 @@
         max-width: none;
 
         h1 {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
         }
 
         p {
@@ -92,6 +92,21 @@
         .doughnut-chart {
             max-width: 250px;
             max-height: 250px;
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .doughnut-chart-container {
+        max-width: 450px;
+
+        .chart-wrapper {
+            height: 280px;
+        }
+
+        .doughnut-chart {
+            max-width: 280px;
+            max-height: 280px;
         }
     }
 }
