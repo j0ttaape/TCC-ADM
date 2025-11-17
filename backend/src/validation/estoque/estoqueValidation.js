@@ -1,5 +1,5 @@
 
-export default function validarInserirEstoque(infos){
+export default function validarInserirEstoque(infos, estoqueAtual = null){
     if(!infos.tipo_sanguineo)
         throw new Error('Informe o tipo sanguineo');
     if(infos.quantidade === undefined || infos.quantidade === null || typeof infos.quantidade !== 'number' || isNaN(infos.quantidade) )
@@ -9,6 +9,13 @@ export default function validarInserirEstoque(infos){
     if(!infos.nome_hemo)
         throw new Error('Informe o nome do hemocentro');
 
+    if(estoqueAtual){
+        const novaQuantidade = estoqueAtual.quantidade_bolsas + infos.quantidade;
+        const novaMaxima = estoqueAtual.quantidade_maxima + infos.quantidade_maxima;
+        if (novaQuantidade > novaMaxima) {
+            throw new Error('A quantidade de bolsas não pode exceder a quantidade máxima');
+        }
+    }
 }
 
 export function validarRetirarEstoque(infos){

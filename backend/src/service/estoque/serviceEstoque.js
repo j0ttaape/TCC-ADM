@@ -1,9 +1,10 @@
-import { adicionarNoEstoque, retirarDoEstoque, listarEstoqueHemocentro } from "../../repository/estoque/estoqueRepository.js";
+import { adicionarNoEstoque, retirarDoEstoque, listarEstoqueHemocentro, obterEstoqueAtual } from "../../repository/estoque/estoqueRepository.js";
 import validarInserirEstoque, { validarRetirarEstoque } from "../../validation/estoque/estoqueValidation.js"
 
 export async function inserirEstoqueService(infos,id_adm){
     try {
-        validarInserirEstoque(infos);
+        const estoqueAtual = await obterEstoqueAtual(infos);
+        validarInserirEstoque(infos, estoqueAtual);
         const mensagem = await adicionarNoEstoque(infos);
 
         return mensagem;

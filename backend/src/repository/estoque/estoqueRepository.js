@@ -17,15 +17,6 @@ export async function adicionarNoEstoque(infos, id_adm) {
         `
         const [estoqueAtual] = await connection.query(comandoVerificar, [id[0].id_hemocentro, infos.tipo_sanguineo]);
 
-        if (estoqueAtual.length > 0) {
-            const novaQuantidade = estoqueAtual[0].quantidade_bolsas + infos.quantidade;
-            const novaMaxima = estoqueAtual[0].quantidade_maxima + infos.quantidade_maxima;
-
-            if (novaQuantidade > novaMaxima) {
-                throw new Error('A quantidade de bolsas não pode exceder a quantidade máxima');
-            }
-        }
-
         const comando3 = `
         update estoque
         set quantidade_bolsas = quantidade_bolsas + ?,
@@ -92,6 +83,31 @@ export async function retirarDoEstoque(infos, id_adm) {
         return 'Hemocentro não encontrado'
     }
 
+}
+
+export async function obterEstoqueAtual(infos) {
+    const comando2 = `
+    select id_hemocentro from hemocentros
+    where nome_hemocentro = ?
+    `
+    const [id] = await connection.query(comando2, [infos.nome_hemo]);
+
+    if (id.length == 1) {
+        const comandoVerificar = `
+        select quantidade_bolsas, quantidade_maxima from estoque
+        where id_hemocentro = ?
+        and tipo_sanguineo = ?
+        `
+        const [estoqueAtual] = await connection.query(comandoVerificar, [id[0].id_hemocentro, infos.tipo_sanguineo]);
+
+        if (estoqueAtual.length > 0) {
+            return estoqueAtual[0];
+        } else {
+            return { quantidade_bolsas: 0, quantidade_maxima: 0 };
+        }
+    } else {
+        throw new Error('Hemocentro não encontrado');
+    }
 }
 
 export async function listarEstoqueHemocentro(nome_hemo) {
